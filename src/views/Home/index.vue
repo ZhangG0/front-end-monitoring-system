@@ -79,8 +79,6 @@ export default {
     renderChart1() {
       let bottomChart1 = this.$echarts.init(document.getElementById("chart1"));
 
-      let bottomChart3 = this.$echarts.init(document.getElementById("chart3"));
-
       option1 && bottomChart1.setOption(option1);
     },
     renderChart2() {
