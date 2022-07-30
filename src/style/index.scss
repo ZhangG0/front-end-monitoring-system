@@ -1,0 +1,16 @@
+.main {
+    height: 97vh;
+    position: relative;
+  }
+  .left {
+    position: absolute;
+    height: 100%;
+    width: 20%;
+  }
+  .right {
+    margin-left: 20%;
+    height: 100%;
+    background: #f8f8f9;
+/*     padding: 0.62rem 0.2rem 0.2rem;
+ */    overflow-y: auto;
+  }
