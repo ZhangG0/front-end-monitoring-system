@@ -5,10 +5,16 @@ const routes = [
        component:() => import("@/views/Home") 
     },
     {
-       path:'/foot',
-       name: 'Foot',
-       component:() => import("@/views/Foot") 
+       path:'/health',
+       name: 'Health',
+       component:() => import("@/views/Health") 
     },
+    {
+      path:'/performance',
+      name: 'Performance',
+      component:() => import("@/views/PerformancePreview") 
+   },
+
    ]
 
 export default routes

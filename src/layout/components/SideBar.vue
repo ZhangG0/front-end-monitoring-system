@@ -6,7 +6,7 @@
       :router="true"
       >
       <el-menu-item v-for="(item, index) in menuList"  :key="item.path+index" :index="item.path">
-        <i class="el-icon-menu"></i>
+        <span class="iconfont">{{ iconfont(item.icon)}}</span>
         <span slot="title">{{item.name}}</span>
       </el-menu-item>
       
@@ -15,19 +15,25 @@
 </template>
 
 <script>
+
 export default {
   data(){
     return {
       menuList: [
       {
        path:'/',
-       icon: '',
+       icon: '&#xe631;',
        name: '概览',
       },
       {
-       path:'/foot',
-       icon: '',
+       path:'/health',
+       icon: '&#xe655;',
        name: '健康情况',
+    },
+     {
+       path:'/Performance',
+       icon: '&#xe605;',
+       name: '性能预览',
     },
     ]
     }
@@ -37,11 +43,21 @@ export default {
     console.log(this.$router);
   },
   methods: {
+      
+      iconfont: function (icon) {
+					const reg = /(&#x)?(.*)/
+					let iconfontName
+					if(reg.test(icon)) {
+						iconfontName = reg.exec(icon)[2]
+					}
+					return String.fromCharCode(parseInt(iconfontName, 16))
+				}
+
 
   }
 }
 </script>
 
 <style>
-
+@import '../../style/iconfont/iconfont.css'
 </style>

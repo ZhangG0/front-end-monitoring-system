@@ -1,6 +1,6 @@
 <template>
   <div>
-    foot
+    <h1>地表最强健康情况</h1>
   </div>
 </template>
 
