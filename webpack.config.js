@@ -133,6 +133,18 @@ module.exports = {
         splitChunks: {
             chunks: "all",
             cacheGroups: {
+                echarts:{
+                    chunks:"all",
+                    name: "echarts-element",
+                    test: /[\\/]node_modules[\\/]_?echarts(.*)/,
+                    priority: 31,
+                },
+                elementUI: {
+                    chunks:"all",
+                    name: "chunk-element",
+                    test: /[\\/]node_modules[\\/]_?element-ui(.*)/,
+                    priority: 30,
+                  },
                 // 将vue相关的库单独打包，减少node_modules的chunk体积。
                 vue: {
                     name: "vue",
