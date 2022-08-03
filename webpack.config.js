@@ -170,6 +170,7 @@ module.exports = {
         alias: {
             // 路径别名
             "@": path.resolve(__dirname, "./src"),
+            'vue$': 'vue/dist/vue.esm.js',
         },
     },
     devServer: {
