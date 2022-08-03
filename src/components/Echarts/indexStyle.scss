@@ -1,0 +1,36 @@
+.card {
+  border-radius: 8px;
+  width: 400px;
+  height: 400px;
+
+  &-main {
+  }
+}
+.card-header {
+  height: 48px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 22px;
+  flex-wrap: wrap;
+  .card-header-title {
+    color: #363b52;
+    font-size: 1em;
+    width: 100%;
+    display: flex;
+    align-items:flex-start;
+    justify-content: space-between;
+    .title-date{
+      color: red;
+      font-weight: 600;
+    }
+  }
+  .card-header-data{
+    color: #a3a5b0;
+    font-size: 0.26em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}

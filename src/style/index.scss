@@ -1,3 +1,5 @@
+@import "./element.scss";
+
 .main {
     height: 97vh;
     position: relative;
@@ -10,7 +12,7 @@
   .right {
     margin-left: 20%;
     height: 100%;
-    background: #f8f8f9;
+    background: rgb(248,248,249);
 /*     padding: 0.62rem 0.2rem 0.2rem;
  */    overflow-y: auto;
   }

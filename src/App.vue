@@ -1,20 +1,18 @@
 <template>
   <div id="app">
-
     <layout />
   </div>
 </template>
 
 <script>
-import layout from './layout'
+import layout from "./layout";
 export default {
   name: "App",
   components: {
-    layout
-  }
+    layout,
+  },
 };
 </script>
 
 <style>
-
 </style>
