@@ -1,28 +1,37 @@
 <template>
   <div id="echarts">
-    <el-card class="card">
-      <div class="card-header">
+    <el-card
+      class="card"
+      :style="`width:${width}%px;height:${height}px`"
+    >
+      <div
+        class="card-header"
+      >
         <div class="card-header-title">
           <div class="title-name">
-            <span>123213213</span>
-            <span>
+            <span>{{ titleName }}</span>
+            <span class="icon">
               <el-tooltip
                 class="item"
                 effect="dark"
-                content="Top Center 提示文字"
                 placement="top"
               >
-                <el-button>上边</el-button>
+                <div slot="content">
+                  <slot name="explain" />
+                </div>
+                <span class="iconfont icon-wenhao" />
               </el-tooltip>
             </span>
           </div>
           <div class="title-date">
-            <span>0.98%</span>
+            <span
+              :style="titleDate >= 0 ?'color:red':'color:greed' "
+            >{{ titleDate }}%</span>
           </div>
         </div>
         <div class="card-header-data">
           <div class="data-name">
-            <span>2022-12-23</span>
+            <span>{{ beforeWeek }}</span>
           </div>
           <div class="data-date">
             <span>前一周</span>
@@ -32,7 +41,7 @@
       <div
         ref="echarts"
         class="card-main"
-        style="width: 100%; height: calc(100% - 48px)"
+        style="width: 100%; height: calc(100% - 55px)"
       />
     </el-card>
   </div>

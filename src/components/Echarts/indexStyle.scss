@@ -1,13 +1,10 @@
 .card {
   border-radius: 8px;
-  width: 400px;
-  height: 400px;
-
   &-main {
   }
 }
 .card-header {
-  height: 48px;
+  height: 55px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -15,22 +12,29 @@
   font-size: 22px;
   flex-wrap: wrap;
   .card-header-title {
+    font-weight: 500;
     color: #363b52;
     font-size: 1em;
     width: 100%;
     display: flex;
-    align-items:flex-start;
+    align-items: center;
     justify-content: space-between;
+    margin-bottom: 7px;
+    .iconfont{
+      font-size: 1em;
+    }
     .title-date{
-      color: red;
+      color: green;
       font-weight: 600;
     }
+  
   }
   .card-header-data{
     color: #a3a5b0;
-    font-size: 0.26em;
+    font-size: 0.68em;
     width: 100%;
     display: flex;
     justify-content: space-between;
   }
+  
 }

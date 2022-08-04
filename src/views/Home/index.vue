@@ -1,15 +1,10 @@
 <template>
-  <div>
-    <Echarts />
-  </div>
+  <div />
 </template>
 
 <script>
-import Echarts from "@/components/Echarts"
   export default {
-    components:{
-      Echarts
-    }
+    
   }
 </script>
 
