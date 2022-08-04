@@ -16,3 +16,30 @@
 /*     padding: 0.62rem 0.2rem 0.2rem;
  */    overflow-y: auto;
   }
+.el-header {
+  position: relative;
+}
+.el-container {
+  top: 60px;
+  overflow: hidden;
+}
+.el-aside {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 68px;
+  bottom: 0;
+}
+
+.el-main {
+  position: absolute;
+  left: 200px;
+  right: 0;
+  top: 68px;
+  bottom: 0;
+  overflow-y: auto;
+  background-color: #f8f8f9;
+}
+
+
+  
