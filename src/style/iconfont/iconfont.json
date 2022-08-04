@@ -1,24 +1,10 @@
 {
-  "id": "2827956",
-  "name": "test",
+  "id": "3564303",
+  "name": "Frontend-moniting-system",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
-    {
-      "icon_id": "1190536",
-      "name": "health",
-      "font_class": "health",
-      "unicode": "e655",
-      "unicode_decimal": 58965
-    },
-    {
-      "icon_id": "8116169",
-      "name": "性能",
-      "font_class": "xingneng",
-      "unicode": "e605",
-      "unicode_decimal": 58885
-    },
     {
       "icon_id": "14151855",
       "name": "概览",
@@ -27,109 +13,39 @@
       "unicode_decimal": 58929
     },
     {
-      "icon_id": "12515452",
-      "name": "右箭头",
-      "font_class": "youjiantou",
-      "unicode": "e60d",
-      "unicode_decimal": 58893
+      "icon_id": "8242801",
+      "name": "异常管理",
+      "font_class": "yichangguanli",
+      "unicode": "e682",
+      "unicode_decimal": 59010
     },
     {
-      "icon_id": "22228313",
-      "name": "心形",
-      "font_class": "2",
-      "unicode": "e600",
-      "unicode_decimal": 58880
+      "icon_id": "14440224",
+      "name": "HTTP响应",
+      "font_class": "HTTP-Response",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
     },
     {
-      "icon_id": "765611",
-      "name": "消息",
-      "font_class": "shouye",
-      "unicode": "e630",
-      "unicode_decimal": 58928
-    },
-    {
-      "icon_id": "953153",
-      "name": "附近",
-      "font_class": "fujin",
-      "unicode": "e60b",
-      "unicode_decimal": 58891
-    },
-    {
-      "icon_id": "3768204",
-      "name": "首页",
-      "font_class": "shouye1",
-      "unicode": "e60c",
-      "unicode_decimal": 58892
-    },
-    {
-      "icon_id": "12797055",
-      "name": "我的",
-      "font_class": "wode",
-      "unicode": "e642",
-      "unicode_decimal": 58946
-    },
-    {
-      "icon_id": "356475",
-      "name": "所有",
-      "font_class": "suoyou",
-      "unicode": "e62c",
-      "unicode_decimal": 58924
-    },
-    {
-      "icon_id": "992664",
-      "name": "人人",
-      "font_class": "renren",
-      "unicode": "e654",
-      "unicode_decimal": 58964
-    },
-    {
-      "icon_id": "2907160",
-      "name": "任务",
-      "font_class": "renwu",
+      "icon_id": "21736123",
+      "name": "业务性能监控",
+      "font_class": "yewuxingnengjiankong",
       "unicode": "e6ab",
       "unicode_decimal": 59051
     },
     {
-      "icon_id": "3542168",
-      "name": "删除",
-      "font_class": "shanchu",
-      "unicode": "e60a",
-      "unicode_decimal": 58890
+      "icon_id": "26851710",
+      "name": "用户行为分析",
+      "font_class": "yonghuhangweifenxi",
+      "unicode": "ea41",
+      "unicode_decimal": 59969
     },
     {
-      "icon_id": "23880814",
-      "name": "科学技术",
-      "font_class": "kexuejishu",
-      "unicode": "e60f",
-      "unicode_decimal": 58895
-    },
-    {
-      "icon_id": "23880815",
-      "name": "通知公告",
-      "font_class": "tongzhigonggao",
-      "unicode": "e610",
-      "unicode_decimal": 58896
-    },
-    {
-      "icon_id": "23880816",
-      "name": "科学技术2",
-      "font_class": "kexuejishu2",
-      "unicode": "e611",
-      "unicode_decimal": 58897
-    },
-    {
-      "icon_id": "23880818",
-      "name": "新闻动态",
-      "font_class": "xinwendongtai",
-      "unicode": "e612",
-      "unicode_decimal": 58898
-    },
-    {
-      "icon_id": "23880819",
-      "name": "学术讲座",
-      "font_class": "xueshujiangzuo",
-      "unicode": "e613",
-      "unicode_decimal": 58899
+      "icon_id": "577319",
+      "name": "问号",
+      "font_class": "wenhao",
+      "unicode": "e72d",
+      "unicode_decimal": 59181
     }
   ]
 }
