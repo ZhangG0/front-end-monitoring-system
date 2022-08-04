@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <el-menu
       default-active="/"
       class="el-menu-vertical-demo"
@@ -29,15 +29,25 @@ export default {
        name: '概览',
       },
       {
-       path:'/health',
-       icon: '&#xe655;',
-       name: '健康情况',
-    },
-     {
-       path:'/Performance',
-       icon: '&#xe605;',
-       name: '性能预览',
-    },
+       path:'/error',
+       icon: '&#xe682;',
+       name: '异常监控',
+      },
+      {
+       path:'/performance',
+       icon: '&#xe6ab;',
+       name: '性能监控',
+      },
+      {
+       path:'/userBehavior',
+       icon: '&#xea41',
+       name: '用户行为监控',
+      },
+      {
+       path:'/http',
+       icon: '&#xe60e;',
+       name: 'HTTP监控',
+      },
     ]
     }
     
@@ -47,14 +57,14 @@ export default {
   },
   methods: {
       
-      iconfont: function (icon) {
-					const reg = /(&#x)?(.*)/
-					let iconfontName
-					if(reg.test(icon)) {
-						iconfontName = reg.exec(icon)[2]
-					}
-					return String.fromCharCode(parseInt(iconfontName, 16))
-				}
+    iconfont: function (icon) {
+        const reg = /(&#x)?(.*)/
+        let iconfontName
+        if(reg.test(icon)) {
+          iconfontName = reg.exec(icon)[2]
+        }
+        return String.fromCharCode(parseInt(iconfontName, 16))
+    }
 
 
   }
