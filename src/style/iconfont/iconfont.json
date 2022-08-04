@@ -1,0 +1,51 @@
+{
+  "id": "3564303",
+  "name": "Frontend-moniting-system",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "14151855",
+      "name": "概览",
+      "font_class": "gailan",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "8242801",
+      "name": "异常管理",
+      "font_class": "yichangguanli",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "14440224",
+      "name": "HTTP响应",
+      "font_class": "HTTP-Response",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "21736123",
+      "name": "业务性能监控",
+      "font_class": "yewuxingnengjiankong",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
+    },
+    {
+      "icon_id": "26851710",
+      "name": "用户行为分析",
+      "font_class": "yonghuhangweifenxi",
+      "unicode": "ea41",
+      "unicode_decimal": 59969
+    },
+    {
+      "icon_id": "577319",
+      "name": "问号",
+      "font_class": "wenhao",
+      "unicode": "e72d",
+      "unicode_decimal": 59181
+    }
+  ]
+}
