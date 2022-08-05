@@ -2,7 +2,7 @@
   <div id="echarts">
     <el-card
       class="card"
-      :style="`width:${width}%px;height:${height}px`"
+      :style="`width:${width}px;height:${height}px`"
     >
       <div
         class="card-header"
