@@ -6,6 +6,8 @@
 
 <script>
 import layout from './layout'
+
+
 export default {
   name: "App",
   components: {
