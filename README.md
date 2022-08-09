@@ -1,6 +1,29 @@
 # 工程开发说明
-
+已经引入 dayjs包 
 ## 工作流
+
+
+
+
+## 组件用法（全局注册）
+### Echarts用法
+    width：宽 
+    height：高 （不是echarts的宽高，是包着他的）
+    echart-option:echarts配置
+    title-name:图标名字
+    title-date:图标值
+    slot="explain" ：提示文字
+<Echarts 
+      :width="100"
+      :height="500"
+      :echart-option="echartOption"
+      :title-date="0.9"
+      :title-name="'我'"
+    >
+      <div slot="explain">
+        提示文字
+      </div>
+    </Echarts>
 
 1、【新功能开发】以dev分支为主开发分支，新建自己的开发分支，开发完成自测后，合并dev分支
 
@@ -44,6 +67,8 @@ npm run dev
 ### 工程命名规范建议
 
 在路径src/views下新建自己的开发模块，例如:PerformancePreview
+
+
 
 
 

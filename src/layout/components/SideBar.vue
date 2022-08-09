@@ -4,12 +4,15 @@
       default-active="/"
       class="el-menu-vertical-demo"
       :router="true"
+    >
+      <el-menu-item
+        v-for="(item, index) in menuList"
+        :key="item.path+index"
+        :index="item.path"
       >
-      <el-menu-item v-for="(item, index) in menuList"  :key="item.path+index" :index="item.path">
-        <span class="iconfont">{{ iconfont(item.icon)}}</span>
-        <span slot="title">{{item.name}}</span>
+        <span class="iconfont">{{ iconfont(item.icon) }}</span>
+        <span slot="title">{{ item.name }}</span>
       </el-menu-item>
-      
     </el-menu>
   </div>
 </template>
