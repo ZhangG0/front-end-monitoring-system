@@ -42,7 +42,7 @@
     "not dead"
   ],
   "dependencies": {
-    
+    "dayjs": "^1.11.4",
     "echarts": "^5.3.3",
     "element-ui": "^2.15.6",
     "node-sass": "^7.0.1",
