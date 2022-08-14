@@ -1,10 +1,35 @@
 <template>
   <div class="container">
-    <el-card class="overview">
-      <div slot="header">
-        <span>HTTP数据统计</span>
-      </div>
-    </el-card>
+    <!-- 多列布局 -->
+    <el-row class="container__row">
+      <el-col :span="8">
+        <el-card class="container__card">
+          <request-box
+            title="接口请求总量"
+            :num="263"
+            tips="发起请求的总数量"
+          ></request-box>
+        </el-card>
+      </el-col>
+      <el-col :span="8" class="container__row__item">
+        <el-card >
+          <request-box
+            title="接口请求总量"
+            :num="263"
+            tips="发起请求的总数量"
+          ></request-box>
+        </el-card>
+      </el-col>
+      <el-col :span="8" class="container__row__item">
+        <el-card >
+          <request-box
+            title="接口请求总量"
+            :num="263"
+            tips="发起请求的总数量"
+          ></request-box>
+        </el-card>
+      </el-col>
+    </el-row>
 
     <el-card class="details">
       <div slot="header">
@@ -31,9 +56,10 @@
 
 <script>
 import axios from "axios";
+import requestBox from "./components/request-box.vue";
 export default {
   components: {
-    ring
+    requestBox,
   },
   data() {
     return {
@@ -43,7 +69,6 @@ export default {
         { url: "http://baidu.com" },
         { url: "http://baidu.com" },
       ],
-      
     };
   },
   created() {
@@ -70,21 +95,26 @@ export default {
     }
 
     XMLHttpRequest.prototype.open = Myopen; */
-
     // axios.get("https://autumnfish.cn/api/joke/").then((response) => {
     //   console.log(response.data);
     // });
-
-
-    
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.container {
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    &__card{
+      height: 120px !important;
+    }
+  }
+}
 .overview {
-  height: 250px;
-  &_test{
+  // height: 250px;
+  &_test {
     width: 100px;
     height: 100px;
   }
