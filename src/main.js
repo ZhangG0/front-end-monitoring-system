@@ -27,9 +27,27 @@ Vue.component(Echarts.name,Echarts)
 
 Vue.config.productionTip = false
 
+// let monitorWhiteScreenNode = document.querySelector('#app');
 
+// if (monitorWhiteScreenNode) {
+//     setTimeout(() => {
+//         try { 
+//             console.log("app节点："+monitorWhiteScreenNode);
+//             console.log("innerhtml:"+monitorWhiteScreenNode.innerHTML)
+//             if (!monitorWhiteScreenNode.innerHTML) {
+//               // 重要节点没有内容
+//               console.log("白屏啦")  
+//             }else{
+//               console.log("没有白屏")
+//             }
+//         } catch (err) {
+//           console.log("错误")
+//         }
+//     }, 2000);
+// }
 
 new Vue({
   render: h => h(App),
   router
 }).$mount('#app')
+

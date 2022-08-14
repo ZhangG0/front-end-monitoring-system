@@ -1,10 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <p class="minititle">页面加载耗时统计</p>
+    
     <el-card class="overview">
       <div class="content">
         <div class="counts">
             <p class="legend">近7天页面加载耗时分段统计</p>
+            <div>{{a}}</div>
+            <button  @click="fnbtn">点击</button>
         </div>
         <div class="trendGraph">
           <p class="legend">近7天页面加载耗时变化趋势</p>
@@ -32,6 +35,8 @@
 </template>
 
 <script>
+
+
 export default {
   data() {
     return {
@@ -43,7 +48,32 @@ export default {
 
       ]
     }
-  }
+  },
+  fnbtn() {
+      this.a=1;
+  },
+  
+  mounted() {
+    console.log("处理性能页面啦")
+    let monitorWhiteScreenNode = document.querySelector('.container');
+
+    if (monitorWhiteScreenNode) {
+        setTimeout(() => {
+            try { 
+                
+                console.log("性能页面innerhtml:"+monitorWhiteScreenNode.innerHTML)
+                if (!monitorWhiteScreenNode.innerHTML) {
+                  // 重要节点没有内容
+                  console.log("性能页面白屏啦")   
+                }else{
+                  console.log("性能页面没有白屏")
+                }
+            } catch (err) {
+              console.log("错误")
+            }
+        }, 2000);
+    }
+  } 
 };
 </script>
 
