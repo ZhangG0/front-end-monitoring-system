@@ -3,6 +3,7 @@ export default {
   name:"Echarts",
   data() {
     return {
+      times:'前一周',
       beforeWeek: undefined,
       myEcharts:undefined
     }
@@ -20,8 +21,25 @@ export default {
       default:0
     }
   },
+  watch:{
+    echartOption:{
+      handler(){
+        this.echartsInit()
+      }
+    },
+    times:{
+      handler(){
+        this.getBeforeWeek()
+      }
+    }
+  },
   computed: {
     
+  },
+  created() {
+    this.$bus.$on('changeTimes',(e)=>{
+      this.times = e
+    })
   },
   mounted() {
     this.getBeforeWeek()
@@ -30,7 +48,18 @@ export default {
   },
   methods: {
     getBeforeWeek() {
-      this.beforeWeek = this.$dayjs().subtract(1, 'week').format('YYYY-MM-DD');
+      switch (this.times) {
+        case '前一周':
+          this.beforeWeek = this.$dayjs().subtract(1, 'week').format('YYYY-MM-DD');
+          break;
+        case '前二周':
+          this.beforeWeek = this.$dayjs().subtract(2, 'week').format('YYYY-MM-DD');
+          break;
+          case '前一天':
+          this.beforeWeek = this.$dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+          break;
+      }
+     
     },
     echartsInit(){
      

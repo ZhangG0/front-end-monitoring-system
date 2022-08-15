@@ -1,5 +1,7 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+  >
     <layout />
   </div>
 </template>
@@ -11,6 +13,10 @@ export default {
   components: {
     layout,
   },
+  mounted(){
+  },
+  methods: {
+  }
 };
 </script>
 
