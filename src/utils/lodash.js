@@ -14,7 +14,7 @@ export function throttle(func, time) {
 export function debounce(func,time){
     let timer 
     return function (...args) { 
-        if(timer) clearTimeout(time)
+        if(timer) clearTimeout(timer)
         timer =  setTimeout(() => {
             func.apply(this,args)
             timer = null

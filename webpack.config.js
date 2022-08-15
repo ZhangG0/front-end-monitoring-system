@@ -10,7 +10,9 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //复制
 const CopyPlugin = require("copy-webpack-plugin");
-
+//终端上色
+//进度条
+const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV === 'Production'
 const getStyleLoaders = (preProcessor) => {
@@ -30,6 +32,8 @@ const getStyleLoaders = (preProcessor) => {
         preProcessor
     ].filter(Boolean)
 }
+
+
 module.exports = {
     entry: './src/main.js',
     output: {
@@ -89,6 +93,17 @@ module.exports = {
         ]
     },
     plugins: [
+        new ProgressBarPlugin({
+            width: 50, 					 // 默认20，进度格子数量即每个代表进度数，如果是20，那么一格就是5。
+            // format: chalk.blue.bold("build") + chalk.yellow('[:bar] ') + chalk.green.bold(':percent') + ' (:elapsed秒)',
+            stream: process.stderr,        // 默认stderr，输出流
+            complete: "#",                 // 默认“=”，完成字符
+            clear: false,                  // 默认true，完成时清除栏的选项
+            renderThrottle: "",            // 默认16，更新之间的最短时间（以毫秒为单位）
+            callback() {                   // 进度条完成时调用的可选函数
+              console.log("打包完成")
+            }
+          }),
         new ESLintWebpackPlugin({
             context: path.resolve(__dirname, "./src"),
             exclude: "node_modules",
@@ -173,6 +188,7 @@ module.exports = {
             'vue$': 'vue/dist/vue.esm.js',
         },
     },
+    
     devServer: {
         open: true,
         host: "localhost",
