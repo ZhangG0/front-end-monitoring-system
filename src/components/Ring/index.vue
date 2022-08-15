@@ -81,7 +81,6 @@ export default {
         },
       ],
     };
-    console.log(option);
     const chartObj = this.$echarts.init(this.$refs.ringChart);
     chartObj.setOption(option);
   },

@@ -12,7 +12,7 @@
         </el-card>
       </el-col>
       <el-col :span="8" class="container__row__item">
-        <el-card >
+        <el-card>
           <request-box
             title="接口请求总量"
             :num="263"
@@ -21,7 +21,7 @@
         </el-card>
       </el-col>
       <el-col :span="8" class="container__row__item">
-        <el-card >
+        <el-card>
           <request-box
             title="接口请求总量"
             :num="263"
@@ -36,21 +36,35 @@
         <span>HTTP监控详情</span>
       </div>
       <div class="content">
-        <div class="httpList">
-          <div
-            class="httpList_item"
-            v-for="(item, index) in httpList"
-            :key="item + index"
-          >
-            <div class="httpList_item_url">{{ item.url }}</div>
-          </div>
-        </div>
-        <div class="httpDetails">
-          <p>请求链路</p>
-          <p>返回信息</p>
-        </div>
+        <el-table :data="tableData" border style="width: 100%">
+          <el-table-column prop="url" label="url" width="180">
+            <template slot-scope="scope">
+              <a :href="scope.row.url" class="content_url" @click.stop.prevent="visibleDialog(scope.row)">{{
+                scope.row.url
+              }}</a>
+            </template>
+          </el-table-column>
+          <el-table-column prop="method" label="方法"> </el-table-column>
+          <el-table-column prop="status" label="状态码"> </el-table-column>
+          <el-table-column prop="success" label="是否成功">
+            <template slot-scope="scope">
+              <div>{{ scope.row.success === true ? "是" : "否" }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="duration" label="请求时长"> </el-table-column>
+          <el-table-column prop="requesType" label="请求方式">
+          </el-table-column>
+        </el-table>
       </div>
     </el-card>
+
+    <el-dialog
+      title="请求返回信息"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <span>{{row.response}}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -63,13 +77,26 @@ export default {
   },
   data() {
     return {
-      httpList: [
-        { url: "http://baidu.com" },
-        { url: "http://baidu.com" },
-        { url: "http://baidu.com" },
-        { url: "http://baidu.com" },
+      dialogVisible: false,
+      tableData: [
+        {
+          url: "http://www.baidu.com",
+          method: "GET",
+          status: "200",
+          success: true,
+          duration: 1800,
+          requesType: "xhr",
+          response: '你好，我是xxx'
+        },
       ],
+    row: {}
     };
+  },
+  methods: {
+    visibleDialog(row){
+      this.row = row;
+      this.dialogVisible = true;
+    }
   },
   created() {
     /*     let orignOpen = XMLHttpRequest.prototype.open;
@@ -107,7 +134,7 @@ export default {
   &__row {
     display: flex;
     justify-content: space-between;
-    &__card{
+    &__card {
       height: 120px !important;
     }
   }
@@ -125,17 +152,8 @@ export default {
 }
 .content {
   display: flex;
-}
-.httpList {
-  display: flex;
-  flex-direction: column;
-  &_item {
-    margin: 5px 5px;
-    padding: 15px 40px;
-    background-color: #f5f5f5;
+  &_url{
+    color: blue;
   }
-}
-.httpDetails {
-  margin-left: 100px;
 }
 </style>
