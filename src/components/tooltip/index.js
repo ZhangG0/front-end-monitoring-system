@@ -19,13 +19,10 @@ export default {
             default:"bottom"
         }
     },
-    mounted() {
-
-    },
     methods: {
         enter(e){
-            switch(this.effect){
-                case "dark":
+            switch(this.placement){
+                case "top":
                 this.el.x = e.clientX - 180
                 this.el.y = e.offsetY
                 break;

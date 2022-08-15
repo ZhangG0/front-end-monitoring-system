@@ -9,7 +9,7 @@
       v-show="isShow"
       ref="contentRef"
       :style="{'--Xleft':el.x,'--Ytop':el.y}"
-      class="content"
+      :class="[effect === 'dark' ? 'darkContent' : 'lightContent']"
     >
       <slot
         name="content"
