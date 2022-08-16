@@ -1,7 +1,8 @@
 .card {
+  min-height: 300px !important;
+  min-width: 300px !important;
   border-radius: 8px;
-  min-height: 300px;
-  min-width: 300px;
+
   &-main {
   }
 }
@@ -38,5 +39,10 @@
     display: flex;
     justify-content: space-between;
   }
+  .icon{
+    display: inline-block;
+    font-size: 20px;
+  }
+
   
 }

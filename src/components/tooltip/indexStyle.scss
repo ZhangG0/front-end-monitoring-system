@@ -1,0 +1,24 @@
+
+.darkContent{
+    left: var(--Xleft);
+    position:absolute ;
+    color: aliceblue;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 8px;
+    width: 150px;
+    word-wrap: break-word;  
+    background-color: rgba(0,0,0,0.7);
+}
+.lightContent{
+    left: var(--Xleft);
+    position:absolute ;
+    color: black;
+    font-size: 14px;
+    border-radius: 4px;
+    border-color: black;
+    padding: 8px;
+    width: 150px;
+    word-wrap: break-word;  
+    background-color: rgb(255, 255, 255);
+}

@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <el-menu
       default-active="/"
       class="el-menu-vertical-demo"
@@ -7,7 +7,7 @@
     >
       <el-menu-item
         v-for="(item, index) in menuList"
-        :key="item.path+index"
+        :key="item.path + index"
         :index="item.path"
       >
         <span class="iconfont">{{ iconfont(item.icon) }}</span>
@@ -18,59 +18,54 @@
 </template>
 
 <script>
-
 export default {
-  data(){
+  data() {
     return {
       menuList: [
-      {
-       path:'/',
-       icon: '&#xe631;',
-       name: '概览',
-      },
-      {
-       path:'/error',
-       icon: '&#xe682;',
-       name: '异常监控',
-      },
-      {
-       path:'/performance',
-       icon: '&#xe6ab;',
-       name: '性能监控',
-      },
-      {
-       path:'/userBehavior',
-       icon: '&#xea41',
-       name: '用户行为监控',
-      },
-      {
-       path:'/http',
-       icon: '&#xe60e;',
-       name: 'HTTP监控',
-      },
-    ]
-    }
-    
+        {
+          path: "/",
+          icon: "&#xe631;",
+          name: "概览",
+        },
+        {
+          path: "/error",
+          icon: "&#xe682;",
+          name: "异常监控",
+        },
+        {
+          path: "/performance",
+          icon: "&#xe6ab;",
+          name: "性能监控",
+        },
+        {
+          path: "/userBehavior",
+          icon: "&#xea41",
+          name: "用户行为监控",
+        },
+        {
+          path: "/http",
+          icon: "&#xe60e;",
+          name: "HTTP监控",
+        },
+      ],
+    };
   },
-  created(){
+  created() {
     console.log(this.$router);
   },
   methods: {
-      
     iconfont: function (icon) {
-        const reg = /(&#x)?(.*)/
-        let iconfontName
-        if(reg.test(icon)) {
-          iconfontName = reg.exec(icon)[2]
-        }
-        return String.fromCharCode(parseInt(iconfontName, 16))
-    }
-
-
-  }
-}
+      const reg = /(&#x)?(.*)/;
+      let iconfontName;
+      if (reg.test(icon)) {
+        iconfontName = reg.exec(icon)[2];
+      }
+      return String.fromCharCode(parseInt(iconfontName, 16));
+    },
+  },
+};
 </script>
 
 <style>
-@import '../../style/iconfont/iconfont.css'
+@import "../../style/iconfont/iconfont.css";
 </style>
