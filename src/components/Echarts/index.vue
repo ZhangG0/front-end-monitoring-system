@@ -11,7 +11,7 @@
           <div class="title-name">
             <span>{{ titleName }}</span>
             <span class="icon">
-              <el-tooltip
+              <Tooltip
                 class="item"
                 effect="dark"
                 placement="top"
@@ -20,7 +20,7 @@
                   <slot name="explain" />
                 </div>
                 <span class="iconfont icon-wenhao" />
-              </el-tooltip>
+              </Tooltip>
             </span>
           </div>
           <div class="title-date">
@@ -34,7 +34,7 @@
             <span>{{ beforeWeek }}</span>
           </div>
           <div class="data-date">
-            <span>前一周</span>
+            <span>{{ times }}</span>
           </div>
         </div>
       </div>
