@@ -6,8 +6,7 @@
       <div class="content">
         <div class="counts">
             <p class="legend">近7天页面加载耗时分段统计</p>
-            <div>{{a}}</div>
-            <button  @click="fnbtn">点击</button>
+            
         </div>
         <div class="trendGraph">
           <p class="legend">近7天页面加载耗时变化趋势</p>
@@ -49,9 +48,7 @@ export default {
       ]
     }
   },
-  fnbtn() {
-      this.a=1;
-  },
+  
   
   mounted() {
     console.log("处理性能页面啦")
