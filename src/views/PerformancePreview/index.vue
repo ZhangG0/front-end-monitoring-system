@@ -248,6 +248,7 @@
             </template>
           </Echart>
         </div>
+      </div>
     </el-card>
   </div>
 </template>
