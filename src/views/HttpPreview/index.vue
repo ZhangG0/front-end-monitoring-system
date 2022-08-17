@@ -2,33 +2,18 @@
   <div class="container">
     <!-- 多列布局 -->
     <el-row class="container__row">
-      <el-col :span="8">
+      <el-col :span="7" class="container__row__col" v-for="(item,index) in boxList" :key="item+index">
         <el-card class="container__card">
-          <request-box
-            title="接口请求总量"
-            :num="263"
-            tips="发起请求的总数量"
+          <request-box 
+            
+            :key="item+index"
+            :title="item.title"
+            :num="item.num"
+            :tips="item.tips"
           ></request-box>
         </el-card>
       </el-col>
-      <el-col :span="8" class="container__row__item">
-        <el-card>
-          <request-box
-            title="接口请求总量"
-            :num="263"
-            tips="发起请求的总数量"
-          ></request-box>
-        </el-card>
-      </el-col>
-      <el-col :span="8" class="container__row__item">
-        <el-card>
-          <request-box
-            title="接口请求总量"
-            :num="263"
-            tips="发起请求的总数量"
-          ></request-box>
-        </el-card>
-      </el-col>
+      
     </el-row>
 
     <el-card class="details">
@@ -77,6 +62,21 @@ export default {
   },
   data() {
     return {
+      boxList: [{
+        title: '接口请求总量',
+        tips: '发起请求的总数量',
+        num: 263
+      },
+      {
+        title: '接口请求平均耗时',
+        tips: '接口请求总时长累加/请求总数',
+        num: 214.14
+      },
+      {
+        title: '接口请求成功率',
+        tips: '请求成功数/请求总数',
+        num: '100%'
+      }],
       dialogVisible: false,
       tableData: [
         {
@@ -130,10 +130,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .container {
+  margin: 0;
+  padding: 0;
   &__row {
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    &__col{
+      width: calc((100% - 30px)/3);
+      // padding: 0 12px 0 12px;
+      margin-right: 0;
+    }
     &__card {
       height: 120px !important;
     }

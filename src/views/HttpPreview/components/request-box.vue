@@ -24,7 +24,7 @@ export default {
       require: true,
     },
     num: {
-      type: Number,
+      type: [Number ,String],
       require: true,
     },
     tips: {
