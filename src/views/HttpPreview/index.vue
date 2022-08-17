@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <!-- 多列布局 -->
+    <h1>接口概览</h1>
     <el-row class="container__row">
       <el-col :span="7" class="container__row__col" v-for="(item,index) in boxList" :key="item+index">
         <el-card class="container__card">
@@ -15,11 +16,11 @@
       </el-col>
       
     </el-row>
-
+    <h1>HTTP监控详情</h1>
     <el-card class="details">
-      <div slot="header">
-        <span>HTTP监控详情</span>
-      </div>
+      <!-- <div slot="header">
+        
+      </div> -->
       <div class="content">
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="url" label="url" width="180">
