@@ -234,20 +234,6 @@
             <template #explain> 页面完全加载时间 </template>
           </Echart>
         </div>
-
-        <div class="echarts-counts">
-          <Echart
-            class="echarts"
-            title-name="dnsTime"
-            :title-date="optionCompare.dnsTime"
-            :week="weekSeries.dnsTime"
-            :today="todaySeries.dnsTime"
-          >
-            <template #explain>
-              DNS解析耗时, 可观察域名解析服务是否正常
-            </template>
-          </Echart>
-        </div>
       </div>
     </el-card>
   </div>
