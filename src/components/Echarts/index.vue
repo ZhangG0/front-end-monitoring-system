@@ -4,9 +4,7 @@
       class="card"
       :style="`width:${width}px;height:${height}px`"
     >
-      <div
-        class="card-header"
-      >
+      <div class="card-header">
         <div class="card-header-title">
           <div class="title-name">
             <span>{{ titleName }}</span>
@@ -24,14 +22,12 @@
             </span>
           </div>
           <div class="title-date">
-            <span
-              :style="titleDate >= 0 ?'color:red':'color:greed' "
-            >{{ titleDate }}%</span>
+            <span :style="titleDate >= 0 ?'color:red':'color:greed' ">{{ titleDate }}%</span>
           </div>
         </div>
         <div class="card-header-data">
           <div class="data-name">
-            <span>{{ beforeWeek }}</span>
+            <span>{{ day }}</span>
           </div>
           <div class="data-date">
             <span>{{ times }}</span>
