@@ -11,15 +11,4 @@ const arrayAverage = (array) => {
 }
 
 
-function getAve(arr) {
-    let sum = 0,
-        ave = 0,
-        i = 0;
-    for (i = 0; i < arr.length; i++) {
-        sum += arr[i];
-    }
-    ave = (sum / arr.length).toFixed(2) - 0;
-    return ave;
-}
-
-export {arrayAverage, getAve}
+export {arrayAverage}
