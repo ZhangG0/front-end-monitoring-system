@@ -160,9 +160,9 @@ export function initJSErrorEchartsData(Data,option) {
         }
     }
 
-    option.JSErrorEchartOption.series[0].data = DataToday;
-    option.JSErrorEchartOption.series[1].data = DataBefore;
-    option.ResourcesErrorEchartOption.series[0].data = DataTodayResources;
-    option.ResourcesErrorEchartOption.series[1].data = DataBeforeResources;
+    option.JSErrorEchartOption.series[1].data = DataToday;
+    option.JSErrorEchartOption.series[0].data = DataBefore;
+    option.ResourcesErrorEchartOption.series[1].data = DataTodayResources;
+    option.ResourcesErrorEchartOption.series[0].data = DataBeforeResources;
 
 }

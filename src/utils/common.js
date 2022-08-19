@@ -10,5 +10,12 @@ const arrayAverage = (array) => {
 
 }
 
+const arraySum = (array) => {
+    return array.reduce((preValue,nowValue) => {
+        return preValue + nowValue
+    },0)
 
-export {arrayAverage}
+}
+
+
+export {arrayAverage, arraySum}

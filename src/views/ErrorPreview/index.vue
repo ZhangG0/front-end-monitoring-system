@@ -84,7 +84,7 @@
 
 import {initJSErrorEchartsData} from "@/monitoringJS/JSErrorInitEchartsData";
 import dayjs from "dayjs";
-import {arrayAverage} from "@/utils/common";
+import {arraySum} from "@/utils/common";
 
 export default {
   name: "Error",
@@ -347,9 +347,19 @@ export default {
             top: 50,
             bottom: 25,
           },
+          legend: {},
           xAxis: [
             {
               type: 'category',
+              axisLine:{
+                lineStyle: {
+                  color:'black'
+                }
+              },
+              axisTick: {
+                show: true,
+                alignWithLabel: true
+              },
               // prettier-ignore
               data: []
             },
@@ -357,7 +367,8 @@ export default {
               show:true,
               type: 'category',
               axisTick: {
-                alignWithLabel: false
+                show: true,
+                alignWithLabel: true
               },
               axisLine: {
                 onZero: false,
@@ -375,22 +386,23 @@ export default {
             }
           ],
           series: [
+
             {
-              name: '当天数据',
+              name: '对照异常数',
               type: 'line',
               smooth: true,
-              color: '#409dfe',
+              color: 'lightgray',
               emphasis: {
                 focus: 'series'
               },
               data: []
             },
+
             {
-              name: '先前数据',
+              name: '今日异常数',
               type: 'line',
-              xAxisIndex: 1,
               smooth: true,
-              color: 'lightgray',
+              color: '#409dfe',
               emphasis: {
                 focus: 'series'
               },
@@ -410,9 +422,19 @@ export default {
             top: 50,
             bottom: 25,
           },
+          legend: {},
           xAxis: [
             {
               type: 'category',
+              axisLine:{
+                lineStyle: {
+                  color:'black'
+                }
+              },
+              axisTick: {
+                show: true,
+                alignWithLabel: true,
+              },
               // prettier-ignore
               data: []
             },
@@ -420,7 +442,8 @@ export default {
               show:true,
               type: 'category',
               axisTick: {
-                alignWithLabel: false
+                show: true,
+                alignWithLabel: true,
               },
               axisLine: {
                 onZero: false,
@@ -439,10 +462,10 @@ export default {
           ],
           series: [
             {
-              name: '当天数据',
+              name: '对照异常数',
               type: 'line',
               smooth: true,
-              color: '#409dfe',
+              color: 'lightgray',
               emphasis: {
                 focus: 'series'
               },
@@ -450,11 +473,10 @@ export default {
             },
 
             {
-              name: '先前数据',
+              name: '今日异常数',
               type: 'line',
-              xAxisIndex: 1,
               smooth: true,
-              color: 'lightgray',
+              color: '#409dfe',
               emphasis: {
                 focus: 'series'
               },
@@ -467,10 +489,10 @@ export default {
   },
   computed:{
     watchJSErrorRate(){
-      return this.echartOption.JSErrorEchartOption.series[0].data
+      return this.echartOption.JSErrorEchartOption.series[1].data
     },
     watchResourcesErrorRate(){
-      return this.echartOption.ResourcesErrorEchartOption.series[0].data
+      return this.echartOption.ResourcesErrorEchartOption.series[1].data
     }
 
   },
@@ -478,14 +500,14 @@ export default {
     //监控计算rate值
     watchJSErrorRate:{
       handler(newValue){
-        this.rateData.JSErrorRate = Number(((arrayAverage(newValue)/arrayAverage(this.echartOption.JSErrorEchartOption.series[1].data)-1)*100).toFixed(2));
+        this.rateData.JSErrorRate = Number(((arraySum(newValue)/arraySum(this.echartOption.JSErrorEchartOption.series[0].data)-1)*100).toFixed(2));
       },
       immediate: true,
       deep:true
     },
     watchResourcesErrorRate:{
       handler(newValue){
-        this.rateData.ResourceErrorDataRate = Number(((arrayAverage(newValue)/arrayAverage(this.echartOption.ResourcesErrorEchartOption.series[1].data)-1)*100).toFixed(2));
+        this.rateData.ResourceErrorDataRate = Number(((arraySum(newValue)/arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data)-1)*100).toFixed(2));
       },
       immediate: true,
       deep:true
@@ -505,8 +527,8 @@ export default {
   },
   methods:{
     toDetail(routerName){
-      this.echartOption.JSErrorEchartOption.series[0].data = [0,0,1,0,0,0,0,0,0,0,0,0];
-      this.echartOption.ResourcesErrorEchartOption.series[0].data = [1,50,1,1,1,1,0,1,2,2,2,2];
+      this.echartOption.JSErrorEchartOption.series[1].data = [0,0,1,0,0,0,0,0,0,0,0,0];
+      this.echartOption.ResourcesErrorEchartOption.series[1].data = [1,50,1,1,1,1,0,1,2,2,2,2];
       console.log(routerName);
     }
   },
