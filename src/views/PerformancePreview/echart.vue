@@ -18,16 +18,27 @@
 
 <script>
 import dayjs from "dayjs";
+
 // 计算上周七天的坐标轴
 let weekAxis = [];
 for (let i = 1; i <= 7; i++) {
   weekAxis.unshift(dayjs().subtract(i, "d").format("MM-DD"));
 }
-// 今天内最近七次的坐标轴
-let todayAxis = [1, 2, 3, 4, 5, 6, 7];
+
+// 计算今日坐标轴
+let todayAxis = [];
+
+// TODO 到时候上线记得改成new Date()
+let nowHour = new Date().getHours();
+
+for (let i = 0; i <= nowHour; i++) {
+  todayAxis.push(i + ":00");
+}
+
 // Echarts要用到的颜色
 const colors = ["#AEBDEE", "#FF9724"];
-// 传给Echarts的day
+
+// 传给Echarts左上角的day
 let myDay = dayjs().subtract(1, "week").format("YYYY-MM-DD");
 console.log(myDay);
 
@@ -68,9 +79,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            axisTick: {
-              alignWithLabel: true,
-            },
+            boundaryGap: false, // 坐标轴两边不留白，才能保持两条线左右始终对齐
             axisLine: {
               onZero: false,
               lineStyle: {
@@ -81,10 +90,20 @@ export default {
             axisPointer: {
               label: {
                 formatter: function (params) {
+                  let left = params.value.match(/(\S*):00/)[1] - 0;
+                  let right =
+                    // TODO 到时候上线记得改成new Date()"1995-12-17T13:24:00"
+                    left + 1 > new Date().getHours()
+                      ? "现在"
+                      : `${left + 1}:00`;
+
+                  // let left = mid - 2 < 0 ? mid : mid - 2;
+                  // let right = mid + 2 > 24 ? mid : mid + 2;
                   return (
-                    "最近第" +
                     params.value +
-                    "个数据" +
+                    "-" +
+                    right +
+                    " 平均值" +
                     (params.seriesData.length
                       ? "：" + params.seriesData[0].data
                       : "")
@@ -97,9 +116,7 @@ export default {
           },
           {
             type: "category",
-            axisTick: {
-              alignWithLabel: true,
-            },
+            boundaryGap: false,
             axisLine: {
               onZero: false,
               lineStyle: {
@@ -112,7 +129,7 @@ export default {
                 formatter: function (params) {
                   return (
                     params.value +
-                    "平均值" +
+                    " 平均值" +
                     (params.seriesData.length
                       ? "：" + params.seriesData[0].data
                       : "")
@@ -140,6 +157,7 @@ export default {
             },
             // 蓝线的值(一周前)
             data: this.week,
+            // 填充渐变
             areaStyle: {
               normal: {
                 color: {
@@ -172,6 +190,7 @@ export default {
             },
             // 橙线的值(今日)
             data: this.today,
+            // 填充渐变
             areaStyle: {
               normal: {
                 color: {
