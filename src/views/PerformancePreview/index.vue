@@ -139,8 +139,7 @@
             :today="todaySeries.fp"
           >
             <template #explain>
-              首次渲染,
-              表示浏览器从开始请求网站到屏幕渲染第一个像素点的时间(开始绘制body的时间点)
+              首次渲染, 表示浏览器从开始请求网站到屏幕渲染第一个像素点的时间(开始绘制body的时间点)
             </template>
           </Echart>
         </div>
