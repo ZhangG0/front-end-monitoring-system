@@ -22,15 +22,19 @@ export default {
     data: {
       type: Object,
       default() {
-        return {};
+        return {
+         value: 32
+        };
       },
     },
   },
   data() {
-    return {};
+    return {
+      ringEcharts: undefined,
+    };
   },
   mounted() {
-    const option = {
+    let option = {
       title: {
         text:
           ((this.data.value / (50 + this.data.value)) * 100).toFixed(2) + "%",
@@ -64,7 +68,8 @@ export default {
           data: [
             //itemSyle是单项的背景颜色设置。
             { value: 50, itemStyle: { color: "#f1f1f1" } },
-            { value: this.data.value, itemStyle: { color: this.color } },
+            //{ value: 40, itemStyle: { color: "#fff1f1" } },
+           { value: this.data.value, itemStyle: { color: this.color } },
           ],
           label: {
             //将视觉引导图关闭
@@ -81,15 +86,15 @@ export default {
         },
       ],
     };
-    const chartObj = this.$echarts.init(this.$refs.ringChart);
-    chartObj.setOption(option);
+    this.ringEcharts= this.$echarts.init(this.$refs.ringChart);
+    this.ringEcharts.setOption(option);
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .ringChart {
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
 }
 </style>
