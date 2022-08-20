@@ -41,10 +41,23 @@
       </el-card>
       <el-card>
         <div class="miniTitle">
-          <div class="title">
+          <span class="title">
             白屏异常监控大屏
-          </div>
+          </span>
         </div>
+        <Echarts
+          :width="430"
+          :height="300"
+          :day="today"
+          times="较前一周"
+          :echart-option="echartOption.WhiteScreenErrorEchartOption"
+          :title-date="rateData.whiteScreenErrorRate"
+          :title-name="'白屏异常'"
+        >
+          <div slot="explain">
+            白屏异常通过监控根节点是否成功渲染来判断
+          </div>
+        </Echarts>
       </el-card>
       <el-card>
         <div class="miniTitle">
@@ -71,7 +84,7 @@
             表示12小时内资源异常出现的的数量
           </div>
         </Echarts>
-      </el-card>
+      </el-card> 
     </div>
     <!--    <img-->
     <!--      src="./Img_综合练习2/xx.jpg"-->
@@ -83,8 +96,12 @@
 <script>
 
 import {initJSErrorEchartsData} from "@/monitoringJS/JSErrorInitEchartsData";
+
+import {initWhiteErrorEchartsData} from "@/monitoringJS/WhiteErrorInitEchartsData";
 import dayjs from "dayjs";
 import {arraySum} from "@/utils/common";
+import service from "@/utils/request"
+import axios from 'axios'
 
 export default {
   name: "Error",
@@ -98,6 +115,7 @@ export default {
         whiteScreenErrorRate:0,
         httpErrorRate:0
       },
+      WhiteScreenEchartData:[],
       EchartsRequestData:[
         [
           {
@@ -484,6 +502,81 @@ export default {
             },
           ]
         },
+        WhiteScreenErrorEchartOption:{
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "line"
+            }
+          },
+          grid: {
+            top: 50,
+            bottom: 25,
+          },
+          legend: {},
+          xAxis: [
+            {
+              type: 'category',
+              axisLine:{
+                lineStyle: {
+                  color:'black'
+                }
+              },
+              axisTick: {
+                show: true,
+                alignWithLabel: true
+              },
+              // prettier-ignore
+              data: []
+            },
+            {
+              show:true,
+              type: 'category',
+              axisTick: {
+                show: true,
+                alignWithLabel: true
+              },
+              axisLine: {
+                onZero: false,
+                lineStyle: {
+                  color: 'gray'
+                }
+              },
+              // prettier-ignore
+              data:[]
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+
+            {
+              name: '对照异常数',
+              type: 'line',
+              smooth: true,
+              color: 'lightgray',
+              emphasis: {
+                focus: 'series'
+              },
+              data: []
+            },
+
+            {
+              name: '今日异常数',
+              type: 'line',
+              smooth: true,
+              color: '#409dfe',
+              emphasis: {
+                focus: 'series'
+              },
+              data: []
+            },
+
+          ]
+        }
       },
     }
   },
@@ -493,6 +586,9 @@ export default {
     },
     watchResourcesErrorRate(){
       return this.echartOption.ResourcesErrorEchartOption.series[1].data
+    },
+    watchWhiteScreenErrorRate(){
+      return this.echartOption.WhiteScreenErrorEchartOption.series[1].data
     }
 
   },
@@ -511,25 +607,47 @@ export default {
       },
       immediate: true,
       deep:true
+    },
+    watchWhiteScreenErrorRate:{
+      handler(newValue){
+        this.rateData.whiteScreenErrorRate = Number(((arraySum(newValue)/arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data)-1)*100).toFixed(2));
+      },
+      immediate: true,
+      deep:true
+    },
+    WhiteScreenEchartData: {
+      handler(newValue){
+        this.WhiteScreenEchartData=newValue;
+        initWhiteErrorEchartsData(this.WhiteScreenEchartData,this.echartOption.WhiteScreenErrorEchartOption)
+      },
+      immediate: true
     }
+
   },
   mounted() {
+    this.getWhiteScreenData();
     this.today = dayjs().subtract(1, "week").format("YYYY-MM-DD");
     initJSErrorEchartsData(this.EchartsRequestData,this.echartOption);
-
 
   },
   created() {
     //手动计算rate值，但是现在watch监控了首次，不需要添加
     // this.rateData.JSErrorRate = ((arrayAverage(DataToday)/arrayAverage(DataBefore)-1)*100).toFixed(2) - 0;
     // this.rateData.ResourceErrorDataRate = ((arrayAverage(DataTodayResources)/arrayAverage(DataBeforeResources)-1)*100).toFixed(2) - 0;
-
+    
   },
   methods:{
     toDetail(routerName){
       this.echartOption.JSErrorEchartOption.series[1].data = [0,0,1,0,0,0,0,0,0,0,0,0];
       this.echartOption.ResourcesErrorEchartOption.series[1].data = [1,50,1,1,1,1,0,1,2,2,2,2];
       console.log(routerName);
+    },
+    getWhiteScreenData() {
+      axios.get("https://console-mock.apipost.cn/app/mock/project/16aefb06-d29a-4884-c2e2-8dd788f9f810/e")
+      .then((res)=>{
+        this.WhiteScreenEchartData=res.data;
+      })
+      
     }
   },
 };
@@ -545,7 +663,6 @@ export default {
   display: flex;
   height: 180px;
 }
-
 .details {
   display: flex;
   flex-flow: row wrap;
@@ -557,22 +674,16 @@ export default {
     flex-flow: row wrap;
     margin-top: 5px;
     justify-content: center;
-
-
   }
 }
-
 .miniTitle {
   text-align: center;
   vertical-align: bottom;
   margin: 0 5px 15px 5px;
-
-
   .title{
     font-size: x-large;
     font-weight: bolder;
   }
-
   .titleDetails{
     color: lightgray;
     float: right;
@@ -583,5 +694,6 @@ export default {
     cursor: pointer;
   }
 }
+
 
 </style>
