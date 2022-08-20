@@ -28,13 +28,13 @@ export function initWhiteErrorEchartsData(Data,option) {
 
   
     // const DataBeforeResources = [2,3,0,2,0,1,0,2,3,0,1,0];
-
     // 循环后端传来的今天的数据
     for (let echartsRequestDataKey in EchartsRequestData) {
+        
         let requestData = EchartsRequestData[echartsRequestDataKey];
-
          //折线图各个小时发生的总错误量
-         let timeSlot = requestData.time.substring(9,11)+":00";
+         let timeSlot = requestData.time.substring(11,13)+":00";
+
          //防止后端数据异常
          if (DataX.indexOf(timeSlot) !== -1){
              DataToday[DataX.indexOf(timeSlot)]++;
@@ -47,7 +47,7 @@ export function initWhiteErrorEchartsData(Data,option) {
         let requestDataBefore = EchartsRequestDataBefore[echartsRequestDataBeforeKey];
 
         //折线图各个小时发生的总错误量
-        let timeSlot = requestDataBefore.time.substring(9,11)+":00";
+        let timeSlot = requestDataBefore.time.substring(11,13)+":00";
 
         //防止后端数据异常
         if (DataX.indexOf(timeSlot) !== -1){
@@ -56,6 +56,5 @@ export function initWhiteErrorEchartsData(Data,option) {
     }
     option.series[1].data=DataToday;
     option.series[0].data=DataBefore;
-    
 
 }

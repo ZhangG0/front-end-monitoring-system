@@ -100,6 +100,8 @@ import {initJSErrorEchartsData} from "@/monitoringJS/JSErrorInitEchartsData";
 import {initWhiteErrorEchartsData} from "@/monitoringJS/WhiteErrorInitEchartsData";
 import dayjs from "dayjs";
 import {arraySum} from "@/utils/common";
+import service from "@/utils/request"
+import axios from 'axios'
 
 export default {
   name: "Error",
@@ -113,6 +115,7 @@ export default {
         whiteScreenErrorRate:0,
         httpErrorRate:0
       },
+      WhiteScreenEchartData:[],
       EchartsRequestData:[
         [
           {
@@ -612,26 +615,39 @@ export default {
       immediate: true,
       deep:true
     },
-    
+    WhiteScreenEchartData: {
+      handler(newValue){
+        this.WhiteScreenEchartData=newValue;
+        initWhiteErrorEchartsData(this.WhiteScreenEchartData,this.echartOption.WhiteScreenErrorEchartOption)
+      },
+      immediate: true
+    }
 
   },
   mounted() {
+    this.getWhiteScreenData();
     this.today = dayjs().subtract(1, "week").format("YYYY-MM-DD");
     initJSErrorEchartsData(this.EchartsRequestData,this.echartOption);
 
-    initWhiteErrorEchartsData(this.EchartsRequestData,this.echartOption.WhiteScreenErrorEchartOption)
   },
   created() {
     //手动计算rate值，但是现在watch监控了首次，不需要添加
     // this.rateData.JSErrorRate = ((arrayAverage(DataToday)/arrayAverage(DataBefore)-1)*100).toFixed(2) - 0;
     // this.rateData.ResourceErrorDataRate = ((arrayAverage(DataTodayResources)/arrayAverage(DataBeforeResources)-1)*100).toFixed(2) - 0;
-
+    
   },
   methods:{
     toDetail(routerName){
       this.echartOption.JSErrorEchartOption.series[1].data = [0,0,1,0,0,0,0,0,0,0,0,0];
       this.echartOption.ResourcesErrorEchartOption.series[1].data = [1,50,1,1,1,1,0,1,2,2,2,2];
       console.log(routerName);
+    },
+    getWhiteScreenData() {
+      axios.get("https://console-mock.apipost.cn/app/mock/project/16aefb06-d29a-4884-c2e2-8dd788f9f810/e")
+      .then((res)=>{
+        this.WhiteScreenEchartData=res.data;
+      })
+      
     }
   },
 };
