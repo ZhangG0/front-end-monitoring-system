@@ -92,11 +92,11 @@
           白屏异常通过监控根节点是否成功渲染来判断
         </div>
       </Echarts> -->
-      <Ring
+      <!-- <Ring
         :data="ringData"
         :color="ringColor"
       >
-      </Ring>
+      </Ring> -->
     </div>
   </div>
 </template>
