@@ -362,7 +362,7 @@ export default {
       performanceGET()
         .then((res) => {
           console.log(res);
-          let data = processData(res);
+          let data = processData(res.data);
           console.log(data);
           this.todaySeries = data.todaySeries;
           this.weekSeries = data.weekSeries;
