@@ -1,5 +1,5 @@
 
-export function initJSErrorEchartsData(Data,option) {
+export function initJSErrorEchartsData(Data,option,RingData) {
     const EchartsRequestData = Data[0];
     const EchartsRequestDataBefore = Data[1];
     //数据初始化
@@ -26,13 +26,10 @@ export function initJSErrorEchartsData(Data,option) {
 
     //时间段内错误次数
     const DataToday = new Array(12).fill(0);
-    //确认接口情况再考虑Before数据的处理方式 先写死
     const DataBefore = new Array(12).fill(0);
-    // const DataBefore = [2,3,6,2,0,1,6,2,3,6,1,3];
 
     const DataTodayResources = new Array(12).fill(0);
     const DataBeforeResources = new Array(12).fill(0);
-    // const DataBeforeResources = [2,3,0,2,0,1,0,2,3,0,1,0];
 
     //各JS错误小类错误量，用于Ring
     const errTypeCount = {
@@ -60,8 +57,8 @@ export function initJSErrorEchartsData(Data,option) {
             errType:'URL错误',
             count:0,
         },
+        total:0
     };
-
     // 循环后端传来的今天的数据
     for (let echartsRequestDataKey in EchartsRequestData) {
         let requestData = EchartsRequestData[echartsRequestDataKey];
@@ -69,35 +66,31 @@ export function initJSErrorEchartsData(Data,option) {
         //区分为js异常还是资源异常 src为”null“ || "" || null 则为JS异常 且判断errorType
         if ((requestData.src === "null" || requestData.src === "" || requestData.src === null) && requestData.errorType !== "ResourceError" ){
             // JS错误异常
-            switch (requestData.errorType) {
-                //饼状图用计算各种错误的百分比
-                case "Error":
-                    errTypeCount.Error.count++;
-                    break;
-                case "ReferenceError":
-                    errTypeCount.ReferenceError.count++;
-                    break;
-                case "TypeError":
-                    errTypeCount.TypeError.count++;
-                    break;
-                case "RangeError":
-                    errTypeCount.RangeError.count++;
-                    break;
-                case "URIError":
-                    errTypeCount.URIError.count++;
-                    break;
-                default:
-            }
-
             //折线图各个小时发生的总错误量
             let timeSlot = requestData.time.substring(9,11)+":00";
             //防止后端数据异常
             if (DataX.indexOf(timeSlot) !== -1){
+                errTypeCount.total++;
                 DataToday[DataX.indexOf(timeSlot)]++;
+                switch (requestData.errorType) {
+                    //饼状图用计算各种错误的百分比
+                    case "Error":
+                        errTypeCount.Error.count++;
+                        break;
+                    case "ReferenceError":
+                        errTypeCount.ReferenceError.count++;
+                        break;
+                    case "TypeError":
+                        errTypeCount.TypeError.count++;
+                        break;
+                    case "RangeError":
+                        errTypeCount.RangeError.count++;
+                        break;
+                    case "URIError":
+                        errTypeCount.URIError.count++;
+                        break;
+                }
             }
-
-
-
 
         }else{
             // 资源异常
@@ -111,7 +104,6 @@ export function initJSErrorEchartsData(Data,option) {
 
         }
     }
-
     // 循环后端传来的之前的数据
     for (let echartsRequestDataBeforeKey in EchartsRequestDataBefore) {
         let requestDataBefore = EchartsRequestDataBefore[echartsRequestDataBeforeKey];
@@ -119,25 +111,6 @@ export function initJSErrorEchartsData(Data,option) {
         //区分为js异常还是资源异常 src为”null“ || "" || null 则为JS异常 且判断errorType
         if ((requestDataBefore.src === "null" || requestDataBefore.src === "" || requestDataBefore.src === null) && requestDataBefore.errorType !== "ResourceError" ){
             // JS错误异常
-            switch (requestDataBefore.errorType) {
-                //饼状图用计算各种错误的百分比
-                case "Error":
-                    errTypeCount.Error.count++;
-                    break;
-                case "ReferenceError":
-                    errTypeCount.ReferenceError.count++;
-                    break;
-                case "TypeError":
-                    errTypeCount.TypeError.count++;
-                    break;
-                case "RangeError":
-                    errTypeCount.RangeError.count++;
-                    break;
-                case "URIError":
-                    errTypeCount.URIError.count++;
-                    break;
-                default:
-            }
 
             //折线图各个小时发生的总错误量
             let timeSlot = requestDataBefore.time.substring(9,11)+":00";
@@ -165,4 +138,9 @@ export function initJSErrorEchartsData(Data,option) {
     option.ResourcesErrorEchartOption.series[1].data = DataTodayResources;
     option.ResourcesErrorEchartOption.series[0].data = DataBeforeResources;
 
+    RingData.TypeError = ((errTypeCount.TypeError.count/errTypeCount.total)*100).toFixed(2) - 0;
+    RingData.RangeError = ((errTypeCount.RangeError.count/errTypeCount.total)*100).toFixed(2) - 0;
+    RingData.ReferenceError = ((errTypeCount.ReferenceError.count/errTypeCount.total)*100).toFixed(2) - 0;
+    RingData.URIError = ((errTypeCount.URIError.count/errTypeCount.total)*100).toFixed(2) - 0;
+    RingData.OtherError = ((errTypeCount.Error.count/errTypeCount.total)*100).toFixed(2) - 0;
 }

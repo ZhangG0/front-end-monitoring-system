@@ -1,9 +1,52 @@
 <template>
   <div class="container">
-    <p class="miniTitle">
-      异常数据统计
-    </p>
-    <el-card class="overview" />
+    <div class="miniTitle">
+      <div>
+        <div class="title">
+          资源异常监控大屏
+        </div>
+        <span
+          class="titleDetails"
+          style="color: black;cursor: auto"
+        >{{ today }}</span>
+      </div>
+    </div>
+    <el-card
+      v-if="RingView"
+      class="overview"
+    >
+      <JSRing
+        :data="RingData.TypeError"
+        color="#409dfe"
+        title="类型错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.ReferenceError"
+        color="#409dfe"
+        title="引用错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.RangeError"
+        color="#409dfe"
+        title="边界错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.URIError"
+        color="#409dfe"
+        title="URL错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.OtherError"
+        color="#409dfe"
+        title="其他错误错误"
+        class="ring"
+      />
+    </el-card>
+
     <div class="details">
       <el-card>
         <div class="miniTitle">
@@ -85,11 +128,22 @@
 import {initJSErrorEchartsData} from "@/monitoringJS/JSErrorInitEchartsData";
 import dayjs from "dayjs";
 import {arraySum} from "@/utils/common";
+import JSRing from "@/views/ErrorPreview/JSRing";
 
 export default {
   name: "Error",
+  components: {JSRing},
   data(){
     return{
+      RingView:true,
+      RingData:{
+        TypeError: undefined,
+        ReferenceError: undefined,
+        RangeError: undefined,
+        URIError: undefined,
+        OtherError: undefined
+      },
+      RingColor:"blue",
       today:"",
       //平均数数据，用于计算右上角涨幅百分比
       rateData:{
@@ -511,13 +565,20 @@ export default {
       },
       immediate: true,
       deep:true
+    },
+    RingData:{
+      handler(){
+        this.RingView = false
+        this.$nextTick(() => {
+          this.RingView = true;
+        });
+      },
+      deep:true
     }
   },
   mounted() {
     this.today = dayjs().subtract(1, "week").format("YYYY-MM-DD");
-    initJSErrorEchartsData(this.EchartsRequestData,this.echartOption);
-
-
+    initJSErrorEchartsData(this.EchartsRequestData,this.echartOption,this.RingData);
   },
   created() {
     //手动计算rate值，但是现在watch监控了首次，不需要添加
@@ -543,7 +604,13 @@ export default {
 }
 .overview {
   display: flex;
-  height: 180px;
+  flex-flow: row;
+  height: 220px;
+  text-align: center;
+
+  .ring{
+    width: 15%;
+  }
 }
 
 .details {
@@ -565,7 +632,7 @@ export default {
 .miniTitle {
   text-align: center;
   vertical-align: bottom;
-  margin: 0 5px 15px 5px;
+  margin: 0 5px 10px 5px;
 
 
   .title{
