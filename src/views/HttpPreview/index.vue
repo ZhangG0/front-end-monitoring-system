@@ -33,7 +33,7 @@
             )
           "
           border
-          style="width: 100%; height: 550px"
+          style="width: 100%;  overflow-y: auto;"
         >
           <el-table-column prop="url" label="url" width="180">
             <template slot-scope="scope">
@@ -63,9 +63,9 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :page-sizes="[10, 15, 20]"
-        :page-size="pagesize"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+        :total="tableData.length"
       >
       </el-pagination>
     </div>
@@ -126,7 +126,7 @@ export default {
       this.dialogVisible = true;
     },
     handleSizeChange(val) {
-      this.pagesize = val;
+      this.pageSize = val;
     },
     handleCurrentChange(val) {
       this.currentPage = val;
