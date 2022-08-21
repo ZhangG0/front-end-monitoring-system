@@ -25,7 +25,16 @@
         
       </div> -->
       <div class="content">
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table
+          :data="
+            tableData.slice(
+              (currentPage - 1) * pageSize,
+              currentPage * pageSize
+            )
+          "
+          border
+          style="width: 100%; height: 550px"
+        >
           <el-table-column prop="url" label="url" width="180">
             <template slot-scope="scope">
               <a
@@ -106,6 +115,9 @@ export default {
         },
       ],
       row: {},
+      currentPage: 1,
+      // 每页多少条
+      pageSize: 10,
     };
   },
   methods: {
@@ -113,8 +125,14 @@ export default {
       this.row = row;
       this.dialogVisible = true;
     },
+    handleSizeChange(val) {
+      this.pagesize = val;
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+    },
   },
-  created() 
+  created() {
     for (let i = 0; i < 50; i++) {
       this.tableData.push({
         url: "http://www.baidu.com",
@@ -152,14 +170,6 @@ export default {
     // axios.get("https://autumnfish.cn/api/joke/").then((response) => {
     //   console.log(response.data);
     // });
-  },
-  methods: {
-    handleSizeChange(val) {
-      this.pagesize = val;
-    },
-    handleCurrentChange(val) {
-      this.currentPage = val;
-    },
   },
 };
 </script>
