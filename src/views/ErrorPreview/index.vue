@@ -3,7 +3,7 @@
     <div class="miniTitle">
       <div>
         <div class="title">
-          资源异常监控大屏
+          异常监控大屏
         </div>
         <span
           class="titleDetails"
@@ -62,7 +62,7 @@
         </div>
 
         <Echarts
-          :width="430"
+          :width="375"
           :height="300"
           :day="today"
           times="较前一周"
@@ -89,7 +89,7 @@
           </span>
         </div>
         <Echarts
-          :width="430"
+          :width="375"
           :height="300"
           :day="today"
           times="较前一周"
@@ -115,7 +115,7 @@
           </div>
         </div>
         <Echarts
-          :width="430"
+          :width="375"
           :height="300"
           :day="today"
           times="较前一周"
@@ -143,7 +143,6 @@ import {initJSErrorEchartsData} from "@/monitoringJS/JSErrorInitEchartsData";
 import {initWhiteErrorEchartsData} from "@/monitoringJS/WhiteErrorInitEchartsData";
 import dayjs from "dayjs";
 import {arraySum} from "@/utils/common";
-import service from "@/utils/request"
 import axios from 'axios'
 import JSRing from "@/views/ErrorPreview/JSRing";
 
@@ -417,7 +416,7 @@ export default {
           },
           grid: {
             top: 50,
-            bottom: 25,
+            bottom: 20,
           },
           legend: {},
           xAxis: [
@@ -492,7 +491,7 @@ export default {
           },
           grid: {
             top: 50,
-            bottom: 25,
+            bottom: 20,
           },
           legend: {},
           xAxis: [
@@ -565,7 +564,7 @@ export default {
           },
           grid: {
             top: 50,
-            bottom: 25,
+            bottom: 20,
           },
           legend: {},
           xAxis: [
@@ -737,7 +736,7 @@ export default {
   justify-content: space-between;
   padding-top: 20px;
   .el-card {
-    min-width: 28%;
+    min-width: 24%;
     display: flex;
     flex-flow: row wrap;
     margin-top: 5px;
