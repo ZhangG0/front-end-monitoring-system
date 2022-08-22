@@ -737,6 +737,7 @@ export default {
   padding-top: 20px;
   .el-card {
     min-width: 24%;
+    max-width: 33%;
     display: flex;
     flex-flow: row wrap;
     margin-top: 5px;
