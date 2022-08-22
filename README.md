@@ -7,25 +7,32 @@
 
 ## 组件用法（全局注册）
 ### Echarts用法
-    width：宽 
-    height：高 （不是echarts的宽高，是包着他的）
-    echart-option:echarts配置
-    title-name:图标名字
-    title-date:图标值
-    slot="explain" ：提示文字
-<Echarts 
-      :width="100"
-      :height="500"
-      :echart-option="echartOption"
-      :title-date="0.9"
-      :title-name="'我'"
-    >
-      <div slot="explain">
-        提示文字
-      </div>
-    </Echarts>
+    width: 宽 
+    height: 高 （不是图的宽高，是包着图的卡片的宽高）
+    echart-option: echarts配置
+    title-name: 图表名
+    title-date: 比较值
+    day: 图表名下方文字
+    times: 比较值下方文字
+    slot="explain": 提示文字
 
-1、【新功能开发】以dev分支为主开发分支，新建自己的开发分支，开发完成自测后，合并dev分支
+```vue
+<Echarts 
+    :width="100"
+    :height="500"
+    :echart-option="echartOption"
+    :title-name="titleName"
+    :title-date="0.9"
+    :day="day"
+    times="较前一周"
+  >
+    <div slot="explain">
+      提示文字
+    </div>
+</Echarts>
+```
+
+【新功能开发】以dev分支为主开发分支，新建自己的开发分支，开发完成自测后，合并dev分支
 
 
 ## 开发使用手册

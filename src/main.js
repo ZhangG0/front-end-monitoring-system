@@ -11,8 +11,6 @@ import 'dayjs/locale/zh-cn' // import locale
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-
-
 dayjs.extend(isLeapYear) // use plugin
 dayjs.locale('zh-cn') // use locale
 Vue.use(ElementUI);
@@ -32,6 +30,7 @@ Vue.component(Tooltip.name, Tooltip)
 Vue.config.productionTip = false
 
 
+
 new Vue({
   beforeCreate() {
     Vue.prototype.$bus = new Vue()
@@ -39,3 +38,4 @@ new Vue({
   render: h => h(App),
   router
 }).$mount('#app')
+
