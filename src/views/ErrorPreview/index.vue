@@ -169,243 +169,7 @@ export default {
         httpErrorRate:0
       },
       WhiteScreenEchartData:[],
-      EchartsRequestData:[
-        [
-          {
-            Type: "AA",
-            time: "2022-8-7 06:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 06:11:12",
-            errorType: "ReferenceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 07:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 08:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "TypeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 09:11:12",
-          errorType: "TypeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"null"
-        },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"./static/index.html"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 13:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 14:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 15:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"6666"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 16:11:12",
-          errorType: "RangeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:""
-        },
-        ],
-        [
-          {
-            Type: "AA",
-            time: "2022-8-7 05:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 06:11:12",
-            errorType: "ReferenceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 07:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"666"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"./static/index.html"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "TypeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 10:11:12",
-          errorType: "TypeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"null"
-        },
-          {
-            Type: "AA",
-            time: "2022-8-7 11:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 11:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },          {
-          Type: "AA",
-          time: "2022-8-7 11:11:12",
-          errorType: "RangeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"null"
-        },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"666"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 12:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 14:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:""
-        },
-          {
-          Type: "AA",
-          time: "2022-8-7 16:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },
-          {
-          Type: "AA",
-          time: "2022-8-7 16:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },
-        ]
-      ],
+      EchartsRequestData:[],
       echartOption: {
         JSErrorEchartOption:{
           tooltip: {
@@ -675,6 +439,13 @@ export default {
       },
       immediate: true
     },
+    EchartsRequestData: {
+      handler(newValue){
+        this.EchartsRequestData = newValue;
+        initJSErrorEchartsData(this.EchartsRequestData,this.echartOption,this.RingData)
+      },
+      immediate: true
+    },
     RingData:{
       handler(){
         this.RingView = false
@@ -687,9 +458,9 @@ export default {
 
   },
   mounted() {
-    this.getWhiteScreenData();
+    this.getEchartsData();
     this.today = dayjs().subtract(1, "week").format("YYYY-MM-DD");
-    initJSErrorEchartsData(this.EchartsRequestData,this.echartOption,this.RingData);
+    // initJSErrorEchartsData(this.EchartsRequestData,this.echartOption,this.RingData);
   },
   created() {
     //手动计算rate值，但是现在watch监控了首次，不需要添加
@@ -703,11 +474,15 @@ export default {
       this.echartOption.ResourcesErrorEchartOption.series[1].data = [1,50,1,1,1,1,0,1,2,2,2,2];
       console.log(routerName);
     },
-    getWhiteScreenData() {
+    getEchartsData() {
       axios.get("https://console-mock.apipost.cn/app/mock/project/16aefb06-d29a-4884-c2e2-8dd788f9f810/e")
       .then((res)=>{
         this.WhiteScreenEchartData=res.data;
       })
+      axios.get("https://console-mock.apipost.cn/app/mock/project/0bc9dcef-c9fe-438e-a463-34cd8ef3f59f//JSTest")
+          .then((res) => {
+            this.EchartsRequestData = res.data
+          })
 
     }
   },
