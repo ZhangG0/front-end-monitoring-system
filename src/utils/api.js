@@ -19,3 +19,9 @@ export const JSErrorGET = () => {
     method: 'get',
   })
 }
+export const InterfaceErrorGet = () => {
+  return service({
+    url: '/port/getError/interfaceError',
+    method: 'get',
+  })
+}
