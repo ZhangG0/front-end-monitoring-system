@@ -2,7 +2,6 @@
 export function initInterfaceErrorEchartsData(Data,option) {
   const EchartsRequestData = Data[0];
   const EchartsRequestDataBefore = Data[1];
-  console.log('test'+EchartsRequestData);
   //数据初始化
   //X轴数据定义
   const nowTime = new Date();

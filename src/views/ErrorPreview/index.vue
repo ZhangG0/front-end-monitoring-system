@@ -540,10 +540,6 @@ export default {
 	created() {
 	},
 	methods: {
-		async getInterfaceData() {
-			const { data } = await service.get("http://175.178.236.203:8080/port/getError/interfaceError")
-			this.interfaceEchartData = [[...data.today], [...data.seven]]
-		},
 		toDetail(routerName) {
 			this.echartOption.JSErrorEchartOption.series[1].data = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			this.echartOption.ResourcesErrorEchartOption.series[1].data = [
