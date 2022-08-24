@@ -1,24 +1,24 @@
-
-.darkContent{
-    left: var(--Xleft);
-    position:absolute ;
-    color: aliceblue;
-    font-size: 14px;
-    border-radius: 4px;
-    padding: 8px;
-    width: 150px;
-    word-wrap: break-word;  
-    background-color: rgba(0,0,0,0.7);
+.darkContent {
+  left: var(--Xleft);
+  position: absolute;
+  color: aliceblue;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 8px;
+  width: 150px;
+  word-wrap: break-word;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100; // 修复tooltip沉在底部的bug
 }
-.lightContent{
-    left: var(--Xleft);
-    position:absolute ;
-    color: black;
-    font-size: 14px;
-    border-radius: 4px;
-    border-color: black;
-    padding: 8px;
-    width: 150px;
-    word-wrap: break-word;  
-    background-color: rgb(255, 255, 255);
+.lightContent {
+  left: var(--Xleft);
+  position: absolute;
+  color: black;
+  font-size: 14px;
+  border-radius: 4px;
+  border-color: black;
+  padding: 8px;
+  width: 150px;
+  word-wrap: break-word;
+  background-color: rgb(255, 255, 255);
 }
