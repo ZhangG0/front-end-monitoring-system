@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div ref="ringChart" class="ringChart"></div>
+    <div
+      ref="ringChart"
+      class="ringChart"
+    />
 
     <!-- demo  class用来制定宽度和高度-->
     <!-- <ring class="overview_test" color="darkBlue" :data="{value: 83.33}"/> -->
@@ -15,14 +18,14 @@ export default {
     color: {
       type: String,
       default() {
-        return "red";
+        return "blue";
       },
     },
     //数据
     data: {
-      type: Object,
+      type: Number,
       default() {
-        return {};
+        return 0;
       },
     },
   },
@@ -32,8 +35,8 @@ export default {
   mounted() {
     const option = {
       title: {
-        text:
-          ((this.data.value / (50 + this.data.value)) * 100).toFixed(2) + "%",
+        text:this.data+"%",
+          // ((this.data.value / (50 + this.data.value)) * 100).toFixed(2) + "%",
         left: "center",
         top: "center",
         textStyle: {
@@ -62,9 +65,9 @@ export default {
           radius: ["60%", "80%"],
           center: ["50%", "50%"],
           data: [
-            //itemSyle是单项的背景颜色设置。
-            { value: 50, itemStyle: { color: "#f1f1f1" } },
-            { value: this.data.value, itemStyle: { color: this.color } },
+            //itemStyle是单项的背景颜色设置。
+            { value: 100-this.data, itemStyle: { color: "#f1f1f1" } },
+            { value: this.data, itemStyle: { color: this.color } },
           ],
           label: {
             //将视觉引导图关闭
@@ -87,7 +90,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .ringChart {
   width: 100%;
   height: 100%;
