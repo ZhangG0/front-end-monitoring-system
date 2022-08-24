@@ -143,9 +143,8 @@ import {initJSErrorEchartsData} from "@/monitoringJS/JSErrorInitEchartsData";
 import {initWhiteErrorEchartsData} from "@/monitoringJS/WhiteErrorInitEchartsData";
 import dayjs from "dayjs";
 import {arraySum} from "@/utils/common";
-import axios from 'axios'
 import JSRing from "@/views/ErrorPreview/JSRing";
-import {whiteScreenErrorGET} from "@/utils/api.js"
+import {JSErrorGET, whiteScreenErrorGET} from "@/utils/api.js"
 
 export default {
   name: "Error",
@@ -485,12 +484,16 @@ export default {
       // })
       whiteScreenErrorGET().then((res)=>{
         this.WhiteScreenEchartData.push(res.data.today);
-        this.WhiteScreenEchartData.push(res.data.seven)
+        this.WhiteScreenEchartData.push(res.data.seven);
       })
-      axios.get("https://console-mock.apipost.cn/app/mock/project/0bc9dcef-c9fe-438e-a463-34cd8ef3f59f//JSTest")
-          .then((res) => {
-            this.EchartsRequestData = res.data
-          })
+      JSErrorGET().then((res) => {
+        this.EchartsRequestData.push(res.data.today);
+        this.EchartsRequestData.push(res.data.seven);
+      })
+      // axios.get("https://console-mock.apipost.cn/app/mock/project/0bc9dcef-c9fe-438e-a463-34cd8ef3f59f//JSTest")
+      //     .then((res) => {
+      //       this.EchartsRequestData = res.data
+      //     })
 
     }
   },

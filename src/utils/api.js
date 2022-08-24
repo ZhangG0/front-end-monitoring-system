@@ -12,3 +12,10 @@ export const whiteScreenErrorGET = () => {
     method: 'get',
   })
 }
+
+export const JSErrorGET = () => {
+  return service({
+    url: '/js/getError/JSError',
+    method: 'get',
+  })
+}
