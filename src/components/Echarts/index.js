@@ -35,7 +35,7 @@ export default {
       handler() {
         this.echartsInit()
       },
-      deep:true //考虑到更新option下的子属性
+      deep:true//考虑到更新option下的子属性
     },
   },
   computed: {},

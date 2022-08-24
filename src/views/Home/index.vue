@@ -47,23 +47,7 @@ export default {
         ],
       },
     };
-  },
-  beforeCreate(){
-    console.log("beforeCreate",this.num);
-  },
-  created() {
-    console.log("created",this.num);
-    this.a()
-  },
-  beforeMount(){
-    console.log(this.$refs.numRef);
-    
-  },
-  methods:{
-    a(){
-      console.log(2222);
-    }
-  },
+  }
 };
 </script>
 
