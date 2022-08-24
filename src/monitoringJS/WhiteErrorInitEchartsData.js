@@ -33,7 +33,7 @@ export function initWhiteErrorEchartsData(Data,option) {
         
         let requestData = EchartsRequestData[echartsRequestDataKey];
          //折线图各个小时发生的总错误量
-         let timeSlot = requestData.time.substring(11,13)+":00";
+         let timeSlot = requestData.whiteanomalyTime.substring(11,13)+":00";
 
          //防止后端数据异常
          if (DataX.indexOf(timeSlot) !== -1){
@@ -47,7 +47,7 @@ export function initWhiteErrorEchartsData(Data,option) {
         let requestDataBefore = EchartsRequestDataBefore[echartsRequestDataBeforeKey];
 
         //折线图各个小时发生的总错误量
-        let timeSlot = requestDataBefore.time.substring(11,13)+":00";
+        let timeSlot = requestDataBefore.whiteanomalyTime.substring(11,13)+":00";
 
         //防止后端数据异常
         if (DataX.indexOf(timeSlot) !== -1){

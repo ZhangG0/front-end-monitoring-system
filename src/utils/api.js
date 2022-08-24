@@ -6,3 +6,9 @@ export const performanceGET = () => {
     method: 'get',
   })
 }
+export const whiteScreenErrorGET = () => {
+  return service({
+    url: '/white/getError/whiteScreenError',
+    method: 'get',
+  })
+}

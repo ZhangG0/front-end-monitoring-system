@@ -145,6 +145,7 @@ import dayjs from "dayjs";
 import {arraySum} from "@/utils/common";
 import axios from 'axios'
 import JSRing from "@/views/ErrorPreview/JSRing";
+import {whiteScreenErrorGET} from "@/utils/api.js"
 
 export default {
   name: "Error",
@@ -475,9 +476,20 @@ export default {
       console.log(routerName);
     },
     getEchartsData() {
-      axios.get("https://console-mock.apipost.cn/app/mock/project/16aefb06-d29a-4884-c2e2-8dd788f9f810/e")
-      .then((res)=>{
-        this.WhiteScreenEchartData=res.data;
+      // axios.get("https://console-mock.apipost.cn/app/mock/project/16aefb06-d29a-4884-c2e2-8dd788f9f810/white")
+      // .then((res)=>{
+      //   console.log("获取到数据啦")
+      //   console.log(res.data.data)
+      //   this.WhiteScreenEchartData.push(res.data.data.today);
+      //   this.WhiteScreenEchartData.push(res.data.data.seven)
+      //   console.log(this.WhiteScreenEchartData)
+      // })
+      whiteScreenErrorGET().then((res)=>{
+        console.log("获取到数据啦")
+        console.log(res.data.data)
+        this.WhiteScreenEchartData.push(res.data.data.today);
+        this.WhiteScreenEchartData.push(res.data.data.seven)
+        console.log(this.WhiteScreenEchartData)
       })
       axios.get("https://console-mock.apipost.cn/app/mock/project/0bc9dcef-c9fe-438e-a463-34cd8ef3f59f//JSTest")
           .then((res) => {
