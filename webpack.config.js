@@ -196,6 +196,23 @@ module.exports = {
         hot: true,
         compress: true,
         historyApiFallback: true, // 解决vue-router刷新404问题
+        proxy: {
+            '/dev-api/sohu': {
+                target: 'http://pv.sohu.com',
+                changeOrigin: true,
+                pathRewrite: {                   //路径重写
+                    '^/dev-api/sohu': ''                     //选择忽略拦截器里面的内容
+                }
+            },
+            '/dev-api': {
+                target: 'http://175.178.236.203:8080',
+                changeOrigin: true,
+                pathRewrite: {                   //路径重写
+                    '^/dev-api': ''                     //选择忽略拦截器里面的内容
+                }
+            },
+
+        },
     },
     mode: isProduction ? "production" : "development",
     devtool: isProduction ? "source-map" : "cheap-module-source-map",
