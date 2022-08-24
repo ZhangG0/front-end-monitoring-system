@@ -258,6 +258,7 @@
 // 我自己二次封装了Echarts，放在同级目录下，而且取名的时候换成Echart(少个s)，以免和全局注册的Echarts冲突
 import Echart from "./echart.vue";
 import { performanceGET } from "@/utils/api.js";
+import { polling } from "@/utils/polling.js";
 import { getAve, processData } from "./processData.js";
 
 export default {
@@ -279,7 +280,7 @@ export default {
       // 选择器切换 “过去一周”和“今日” 的flag
       flag: true,
 
-      // 上一周每日平均值
+      // 上一周数据
       weekSeries: {
         fp: null,
         fcp: null,
@@ -353,9 +354,14 @@ export default {
     },
   },
   created() {
-    this.getPerformance();
+    // polling(this.getPerformance, 3000);
   },
-  mounted() {},
+  mounted() {
+    this.getPerformance();
+    // setInterval(() => {
+    //   this.getPerformance();
+    // }, 2000);
+  },
   methods: {
     // get请求
     getPerformance() {
