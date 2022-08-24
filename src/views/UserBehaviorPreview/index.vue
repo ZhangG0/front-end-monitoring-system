@@ -29,16 +29,33 @@
       </div>
     </el-card>
     <div class="trendGraph">
-      <el-row :gutter="20">
+      <el-row
+        :gutter="20"
+        type="flex"
+        justify="space-around"
+      >
         <el-col :span="10">
           <Echarts
-            :width="400"
+            :width="500"
             :height="400"
             :echart-option="PvOption"
-            title-name="总页面访问量"
+            title-name="页面总访问量"
             :title-date="0.9"
             :day="today"
-            times="较前一周"
+            times="较前一天"
+          >
+            <div slot="explain" />
+          </Echarts>
+        </el-col>
+        <el-col :span="10">
+          <Echarts
+            :width="500"
+            :height="400"
+            :echart-option="UvOption"
+            title-name="网页总访问量"
+            :title-date="0.9"
+            :day="today"
+            times="较前一天"
           >
             <div slot="explain" />
           </Echarts>

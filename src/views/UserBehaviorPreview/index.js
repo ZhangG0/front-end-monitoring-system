@@ -1,8 +1,9 @@
-import {PvOption} from './echarts'
 export default {
     data() {
         return {
-            PvOption:PvOption,
+            date: [],
+            PvOptionData: [],
+            UvOptionData: [],
             dataGroups: [
                 { title: "网页量(UV)", number: 0, percent: 0 },
                 { title: "页面量(PV)", number: 0, percent: 0 },
@@ -10,13 +11,99 @@ export default {
             ],
             PvData: [],
             UvData: [],
-            today:undefined
+            today: undefined,
+            pageStopArr:[]
         };
     },
+    created() {
 
+    },
     mounted() {
         this.today = this.$dayjs().format("YYYY-MM-DD")
+        for (let i = 0; i < 7; i++) {
+            this.date.push(this.$dayjs(new Date().getTime() - (86400000 * (i + 1))).format('MM-DD'));
+        }
         this.getUvOrPv();
+        this.getPageStopTime()
+    },
+    computed: {
+        PvOption() {
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: this.date,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Direct',
+                        type: 'bar',
+                        barWidth: '60%',
+                        data: this.PvOptionData
+                    }
+                ]
+            };
+        },
+        UvOption() {
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: this.date,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Direct',
+                        type: 'bar',
+                        barWidth: '60%',
+                        data: this.UvOptionData
+                    }
+                ]
+            };
+        }
+
     },
     methods: {
         async getUvOrPv() {
@@ -26,23 +113,30 @@ export default {
                 for (let i in data) {
                     switch (i) {
                         case 'one':
-                            this.PvOption.series[0].data[0] = (data[i][0] ? data[i][0].userbehaviorPv : 0);
+                            this.PvOptionData[0] = (data[i][0] ? data[i][0].userbehaviorPv : 0);
+                            this.UvOptionData[0] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
                             break
                         case 'two':
-                            this.PvOption.series[0].data[1] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.PvOptionData[1] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.UvOptionData[1] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
                             break
                         case 'thr':
-                            this.PvOption.series[0].data[2] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.PvOptionData[2] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.UvOptionData[2] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
                             break
                         case 'fou':
-                            this.PvOption.series[0].data[3] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.PvOptionData[3] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.UvOptionData[3] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
                             break
                         case 'fiv':
-                            this.PvOption.series[0].data[4] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.PvOptionData[4] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.UvOptionData[4] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
                             break
                         case 'six':
-                            this.PvOption.series[0].data[5] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.PvOptionData[5] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
+                            this.UvOptionData[5] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
                     }
+                    
                     this.PvData.push({ [i]: data[i][0]?.userbehaviorPv });
                     this.UvData.push({ [i]: data[i][0]?.userbehaviorUv });
                 }
@@ -107,5 +201,15 @@ export default {
                 }
             }
         },
+        async getPageStopTime(){
+            let {status,data} =  await this.$api.getPageStopTime()
+            if(status === 200){
+                this.pageStopArr = data.page
+                this.pageStopArr.forEach(item => {
+                    item.pageData = item.pageData.split(',')
+                    this.dataGroups[2].number +=  parseInt(item.pageData[0])
+                });
+            }
+        }
     },
 };

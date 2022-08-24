@@ -6,4 +6,5 @@ export const performanceGET = () => {
     method: 'get',
   })
 }
-export const getUvOrPv = () =>  request({url:"/user/performance",method:'get'})
+export const getUvOrPv = () => request({ url: "/user/performance", method: 'get' })
+export const getPageStopTime = () => request({ url: "/page/getPagesTime", method: 'get' })

@@ -51,7 +51,7 @@ export default {
         }
         this.myEcharts = this.$echarts.init(this.$refs.echarts)
         this.myEcharts.resize()
-        this.myEcharts.setOption(this.echartOption,true)
+        this.myEcharts.setOption(this.echartOption)
       })
     },
     //自适应
