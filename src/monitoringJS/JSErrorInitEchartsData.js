@@ -64,15 +64,15 @@ export function initJSErrorEchartsData(Data,option,RingData) {
         let requestData = EchartsRequestData[echartsRequestDataKey];
 
         //区分为js异常还是资源异常 src为”null“ || "" || null 则为JS异常 且判断errorType
-        if ((requestData.src === "null" || requestData.src === "" || requestData.src === null) && requestData.errorType !== "ResourceError" ){
+        if ((requestData.jsanomalySrc === "null" || requestData.jsanomalySrc === "" || requestData.jsanomalySrc === null) && requestData.jsanomalyErrortype !== "ResourceError" ){
             // JS错误异常
             //折线图各个小时发生的总错误量
-            let timeSlot = requestData.time.substring(9,11)+":00";
+            let timeSlot = requestData.jsanomalyTime.substring(11,13)+":00";
             //防止后端数据异常
             if (DataX.indexOf(timeSlot) !== -1){
                 errTypeCount.total++;
                 DataToday[DataX.indexOf(timeSlot)]++;
-                switch (requestData.errorType) {
+                switch (requestData.jsanomalyErrortype) {
                     //饼状图用计算各种错误的百分比
                     case "Error":
                         errTypeCount.Error.count++;
@@ -97,7 +97,7 @@ export function initJSErrorEchartsData(Data,option,RingData) {
             errTypeCount.ResourceError.count++;
 
             //折线图各小时发生的资源异常
-            let timeSlot = requestData.time.substring(9,11)+":00";
+            let timeSlot = requestData.jsanomalyTime.substring(11,13)+":00";
             if (DataX.indexOf(timeSlot) !== -1){
                 DataTodayResources[DataX.indexOf(timeSlot)]++;
             }
@@ -109,11 +109,11 @@ export function initJSErrorEchartsData(Data,option,RingData) {
         let requestDataBefore = EchartsRequestDataBefore[echartsRequestDataBeforeKey];
 
         //区分为js异常还是资源异常 src为”null“ || "" || null 则为JS异常 且判断errorType
-        if ((requestDataBefore.src === "null" || requestDataBefore.src === "" || requestDataBefore.src === null) && requestDataBefore.errorType !== "ResourceError" ){
+        if ((requestDataBefore.jsanomalySrc === "null" || requestDataBefore.jsanomalySrc === "" || requestDataBefore.jsanomalySrc === null) && requestDataBefore.jsanomalyErrortype !== "ResourceError" ){
             // JS错误异常
 
             //折线图各个小时发生的总错误量
-            let timeSlot = requestDataBefore.time.substring(9,11)+":00";
+            let timeSlot = requestDataBefore.jsanomalyTime.substring(11,13)+":00";
 
             //防止后端数据异常
             if (DataX.indexOf(timeSlot) !== -1){
@@ -125,14 +125,13 @@ export function initJSErrorEchartsData(Data,option,RingData) {
             errTypeCount.ResourceError.count++;
 
             //折线图各小时发生的资源异常
-            let timeSlot = requestDataBefore.time.substring(9,11)+":00";
+            let timeSlot = requestDataBefore.jsanomalyTime.substring(11,13)+":00";
             if (DataX.indexOf(timeSlot) !== -1){
                 DataBeforeResources[DataX.indexOf(timeSlot)]++;
             }
 
         }
     }
-
     option.JSErrorEchartOption.series[1].data = DataToday;
     option.JSErrorEchartOption.series[0].data = DataBefore;
     option.ResourcesErrorEchartOption.series[1].data = DataTodayResources;
