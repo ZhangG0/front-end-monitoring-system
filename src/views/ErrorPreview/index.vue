@@ -1,97 +1,140 @@
 <template>
-	<div class="container">
-		<div class="miniTitle">
-			<div>
-				<div class="title">异常监控大屏</div>
-				<span class="titleDetails" style="color: black; cursor: auto">{{ today }}</span>
-			</div>
-		</div>
-		<el-card v-if="RingView" class="overview">
-			<JSRing :data="RingData.TypeError" color="#409dfe" title="类型错误" class="ring" />
-			<JSRing :data="RingData.ReferenceError" color="#409dfe" title="引用错误" class="ring" />
-			<JSRing :data="RingData.RangeError" color="#409dfe" title="边界错误" class="ring" />
-			<JSRing :data="RingData.URIError" color="#409dfe" title="URL错误" class="ring" />
-			<JSRing :data="RingData.OtherError" color="#409dfe" title="其他错误错误" class="ring" />
-		</el-card>
+  <div class="container">
+    <div class="miniTitle">
+      <div>
+        <div class="title">
+          异常监控大屏
+        </div>
+        <span
+          class="titleDetails"
+          style="color: black; cursor: auto"
+        >{{ today }}</span>
+      </div>
+    </div>
+    <el-card
+      v-if="RingView"
+      class="overview"
+    >
+      <JSRing
+        :data="RingData.TypeError"
+        color="#409dfe"
+        title="类型错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.ReferenceError"
+        color="#409dfe"
+        title="引用错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.RangeError"
+        color="#409dfe"
+        title="边界错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.URIError"
+        color="#409dfe"
+        title="URL错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.OtherError"
+        color="#409dfe"
+        title="其他错误错误"
+        class="ring"
+      />
+    </el-card>
 
-		<div class="details">
-			<el-card>
-				<div class="miniTitle">
-					<div>
-						<span class="title"> JS异常监控大屏 </span>
-						<span class="titleDetails" @click="toDetail('JSErrorDetail')">详情</span>
-					</div>
-				</div>
+    <div class="details">
+      <el-card>
+        <div class="miniTitle">
+          <div>
+            <span class="title"> JS异常监控大屏 </span>
+            <span
+              class="titleDetails"
+              @click="toDetail('JSErrorDetail')"
+            >详情</span>
+          </div>
+        </div>
 
-				<Echarts
-					:width="375"
-					:height="300"
-					:day="today"
-					times="较前一周"
-					:echart-option="echartOption.JSErrorEchartOption"
-					:title-date="rateData.JSErrorRate"
-					:title-name="'JS异常错误'"
-				>
-					<div slot="explain">表示六种JS异常发生的数量</div>
-				</Echarts>
-			</el-card>
-			<el-card>
-				<div class="miniTitle">
-					<span class="title"> 接口异常监控大屏 </span>
-				</div>
-				<Echarts
-					:width="430"
-					:height="300"
-					:day="today"
-					times="较前一周"
-					:echart-option="echartOption.interfaceErrorEchartOption"
-					:title-date="rateData.interfaceErrorRate"
-					:title-name="'接口异常'"
-				>
-					<div slot="explain">接口异常</div>
-				</Echarts>
-			</el-card>
-			<el-card>
-				<div class="miniTitle">
-					<span class="title"> 白屏异常监控大屏 </span>
-				</div>
-				<Echarts
-					:width="375"
-					:height="300"
-					:day="today"
-					times="较前一周"
-					:echart-option="echartOption.WhiteScreenErrorEchartOption"
-					:title-date="rateData.whiteScreenErrorRate"
-					:title-name="'白屏异常'"
-				>
-					<div slot="explain">白屏异常通过监控根节点是否成功渲染来判断</div>
-				</Echarts>
-			</el-card>
-			<el-card>
-				<div class="miniTitle">
-					<div>
-						<span class="title"> 资源异常监控大屏 </span>
-						<span class="titleDetails" @click="toDetail('JSErrorDetail')">详情</span>
-					</div>
-				</div>
-				<Echarts
-					:width="375"
-					:height="300"
-					:day="today"
-					times="较前一周"
-					:echart-option="echartOption.ResourcesErrorEchartOption"
-					:title-date="rateData.ResourceErrorDataRate"
-					:title-name="'资源异常错误'"
-				>
-					<div slot="explain">表示12小时内资源异常出现的的数量</div>
-				</Echarts>
-			</el-card>
-		</div>
-		<!--    <img-->
-		<!--      src="./Img_综合练习2/xx.jpg"-->
-		<!--      alt="测试图片"-->
-		<!--    >-->
-	</div>
+        <Echarts
+          :width="375"
+          :height="300"
+          :day="today"
+          times="较前一周"
+          :echart-option="echartOption.JSErrorEchartOption"
+          :title-date="rateData.JSErrorRate"
+          :title-name="'JS异常错误'"
+        >
+          <div slot="explain">
+            表示六种JS异常发生的数量
+          </div>
+        </Echarts>
+      </el-card>
+      <el-card>
+        <div class="miniTitle">
+          <span class="title"> 接口异常监控大屏 </span>
+        </div>
+        <Echarts
+          :width="375"
+          :height="300"
+          :day="today"
+          times="较前一周"
+          :echart-option="echartOption.interfaceErrorEchartOption"
+          :title-date="rateData.interfaceErrorRate"
+          :title-name="'接口异常'"
+        >
+          <div slot="explain">
+            接口异常
+          </div>
+        </Echarts>
+      </el-card>
+      <el-card>
+        <div class="miniTitle">
+          <span class="title"> 白屏异常监控大屏 </span>
+        </div>
+        <Echarts
+          :width="375"
+          :height="300"
+          :day="today"
+          times="较前一周"
+          :echart-option="echartOption.WhiteScreenErrorEchartOption"
+          :title-date="rateData.whiteScreenErrorRate"
+          :title-name="'白屏异常'"
+        >
+          <div slot="explain">
+            白屏异常通过监控根节点是否成功渲染来判断
+          </div>
+        </Echarts>
+      </el-card>
+      <el-card>
+        <div class="miniTitle">
+          <div>
+            <span class="title"> 资源异常监控大屏 </span>
+            <span
+              class="titleDetails"
+              @click="toDetail('JSErrorDetail')"
+            >详情</span>
+          </div>
+        </div>
+        <Echarts
+          :width="375"
+          :height="300"
+          :day="today"
+          times="较前一周"
+          :echart-option="echartOption.ResourcesErrorEchartOption"
+          :title-date="rateData.ResourceErrorDataRate"
+          :title-name="'资源异常错误'"
+        >
+          <div slot="explain">
+            表示12小时内资源异常出现的的数量
+          </div>
+        </Echarts>
+      </el-card>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -102,7 +145,6 @@ import dayjs from "dayjs"
 import { arraySum } from "@/utils/common"
 import JSRing from "@/views/ErrorPreview/JSRing"
 import { JSErrorGET, whiteScreenErrorGET,InterfaceErrorGet } from "@/utils/api.js"
-import service from "../../utils/request"
 
 export default {
 	name: "Error",
@@ -583,9 +625,11 @@ export default {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
-	padding-top: 20px;
+	margin-top: 20px;
+  padding: 10px;
+  background-color: white;
 	.el-card {
-		min-width: 24%;
+		min-width: 25%;
 		max-width: 33%;
 		display: flex;
 		flex-flow: row wrap;
