@@ -1,8 +1,9 @@
-import service from './request.js'
+import request from './request.js'
 
 export const performanceGET = () => {
-  return service({
+  return request({
     url: '/performance',
     method: 'get',
   })
 }
+export const getUvOrPv = () =>  request({url:"/user/performance",method:'get'})

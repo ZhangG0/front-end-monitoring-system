@@ -1,0 +1,42 @@
+.container {
+    width: 100%;
+  }
+  
+  .overview {
+    height: 200px;
+  }
+  .traffic__data {
+    display: flex;
+    justify-content: space-evenly;
+    &__item {
+      padding: 0 8px 8px 8px;
+      &__title {
+        font-size: 13px;
+        color: #666;
+      }
+      &__number {
+        font-size: 20px;
+        color: #363b52;
+        padding: 10px 0px;
+      }
+    }
+  }
+  .trendGraph {
+    display: flex;
+    margin-top: 40px;
+    .el-card {
+      height: 300px;
+    }
+  }
+  
+  .el-row {
+    width: 100%;
+  }
+  .font-percent {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .traffic__data__item__number{
+    font-weight: 700;
+    font-size: 24px;
+  }

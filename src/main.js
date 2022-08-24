@@ -8,6 +8,7 @@ import "@/style/index.scss"
 import * as dayjs from 'dayjs'
 import * as isLeapYear from 'dayjs/plugin/isLeapYear' // import plugin
 import 'dayjs/locale/zh-cn' // import locale
+import * as api from "./utils/api"
 
 dayjs.extend(isLeapYear) // use plugin
 dayjs.locale('zh-cn') // use locale
@@ -15,7 +16,7 @@ Vue.use(ElementUI);
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$dayjs = dayjs
-
+Vue.prototype.$api = api
 
 
 //组件全局注册

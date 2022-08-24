@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message,  } from 'element-ui'
 const service = axios.create({
-  baseURL:'/dev-api',
+  baseURL:'/api',
   timeout: 10000
 })
 

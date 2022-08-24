@@ -35,7 +35,7 @@ export default {
       handler() {
         this.echartsInit()
       },
-      deep:true //考虑到更新option下的子属性
+      deep:true//考虑到更新option下的子属性
     },
   },
   computed: {},
@@ -51,7 +51,7 @@ export default {
         }
         this.myEcharts = this.$echarts.init(this.$refs.echarts)
         this.myEcharts.resize()
-        this.myEcharts.setOption(this.echartOption)
+        this.myEcharts.setOption(this.echartOption,true)
       })
     },
     //自适应
