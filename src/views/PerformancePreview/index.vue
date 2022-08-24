@@ -354,24 +354,27 @@ export default {
     },
   },
   created() {
+    // this.getPerformance();
     // polling(this.getPerformance, 3000);
   },
-  mounted() {
-    this.getPerformance();
-    // setInterval(() => {
-    //   this.getPerformance();
-    // }, 2000);
-  },
+  mounted() {},
   methods: {
     // get请求
     getPerformance() {
       performanceGET()
         .then((res) => {
-          console.log(res);
-          let data = processData(res.data);
-          console.log(data);
-          this.todaySeries = data.todaySeries;
-          this.weekSeries = data.weekSeries;
+          console.log(
+            "performanceGET轮询",
+            JSON.stringify(this.dataFlag) !== JSON.stringify(res.data)
+          );
+
+          if (JSON.stringify(this.dataFlag) !== JSON.stringify(res.data)) {
+            this.dataFlag = res.data;
+
+            let data = processData(res.data);
+            this.todaySeries = data.todaySeries;
+            this.weekSeries = data.weekSeries;
+          }
         })
         .catch((err) => {
           console.log(err);

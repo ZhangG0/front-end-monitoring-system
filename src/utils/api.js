@@ -2,7 +2,7 @@ import service from './request.js'
 
 export const performanceGET = () => {
   return service({
-    url: '/performance',
+    url: '/data/performance',
     method: 'get',
   })
 }
