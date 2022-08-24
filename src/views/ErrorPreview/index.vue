@@ -1,9 +1,52 @@
 <template>
   <div class="container">
-    <p class="miniTitle">
-      异常数据统计
-    </p>
-    <el-card class="overview" />
+    <div class="miniTitle">
+      <div>
+        <div class="title">
+          异常监控大屏
+        </div>
+        <span
+          class="titleDetails"
+          style="color: black;cursor: auto"
+        >{{ today }}</span>
+      </div>
+    </div>
+    <el-card
+      v-if="RingView"
+      class="overview"
+    >
+      <JSRing
+        :data="RingData.TypeError"
+        color="#409dfe"
+        title="类型错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.ReferenceError"
+        color="#409dfe"
+        title="引用错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.RangeError"
+        color="#409dfe"
+        title="边界错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.URIError"
+        color="#409dfe"
+        title="URL错误"
+        class="ring"
+      />
+      <JSRing
+        :data="RingData.OtherError"
+        color="#409dfe"
+        title="其他错误错误"
+        class="ring"
+      />
+    </el-card>
+
     <div class="details">
       <el-card>
         <div class="miniTitle">
@@ -19,7 +62,7 @@
         </div>
 
         <Echarts
-          :width="430"
+          :width="375"
           :height="300"
           :day="today"
           times="较前一周"
@@ -41,10 +84,23 @@
       </el-card>
       <el-card>
         <div class="miniTitle">
-          <div class="title">
+          <span class="title">
             白屏异常监控大屏
-          </div>
+          </span>
         </div>
+        <Echarts
+          :width="375"
+          :height="300"
+          :day="today"
+          times="较前一周"
+          :echart-option="echartOption.WhiteScreenErrorEchartOption"
+          :title-date="rateData.whiteScreenErrorRate"
+          :title-name="'白屏异常'"
+        >
+          <div slot="explain">
+            白屏异常通过监控根节点是否成功渲染来判断
+          </div>
+        </Echarts>
       </el-card>
       <el-card>
         <div class="miniTitle">
@@ -59,7 +115,7 @@
           </div>
         </div>
         <Echarts
-          :width="430"
+          :width="375"
           :height="300"
           :day="today"
           times="较前一周"
@@ -83,13 +139,27 @@
 <script>
 
 import {initJSErrorEchartsData} from "@/monitoringJS/JSErrorInitEchartsData";
+
+import {initWhiteErrorEchartsData} from "@/monitoringJS/WhiteErrorInitEchartsData";
 import dayjs from "dayjs";
-import {arrayAverage} from "@/utils/common";
+import {arraySum} from "@/utils/common";
+import axios from 'axios'
+import JSRing from "@/views/ErrorPreview/JSRing";
 
 export default {
   name: "Error",
+  components: {JSRing},
   data(){
     return{
+      RingView:true,
+      RingData:{
+        TypeError: undefined,
+        ReferenceError: undefined,
+        RangeError: undefined,
+        URIError: undefined,
+        OtherError: undefined
+      },
+      RingColor:"blue",
       today:"",
       //平均数数据，用于计算右上角涨幅百分比
       rateData:{
@@ -98,243 +168,8 @@ export default {
         whiteScreenErrorRate:0,
         httpErrorRate:0
       },
-      EchartsRequestData:[
-        [
-          {
-            Type: "AA",
-            time: "2022-8-7 06:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 06:11:12",
-            errorType: "ReferenceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 07:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 08:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "TypeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 09:11:12",
-          errorType: "TypeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"null"
-        },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"./static/index.html"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 13:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 14:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 15:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"6666"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 16:11:12",
-          errorType: "RangeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:""
-        },
-        ],
-        [
-          {
-            Type: "AA",
-            time: "2022-8-7 05:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 06:11:12",
-            errorType: "ReferenceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:""
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 07:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"666"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"./static/index.html"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "TypeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 09:11:12",
-            errorType: "Error",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 10:11:12",
-          errorType: "TypeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"null"
-        },
-          {
-            Type: "AA",
-            time: "2022-8-7 11:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 11:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },          {
-          Type: "AA",
-          time: "2022-8-7 11:11:12",
-          errorType: "RangeError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"null"
-        },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "RangeError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"null"
-          },
-          {
-            Type: "AA",
-            time: "2022-8-7 12:11:12",
-            errorType: "ResourceError",
-            browserName:"Chrome",
-            path:"http://localhost:3000/home/test.html",
-            src:"666"
-          },        {
-          Type: "AA",
-          time: "2022-8-7 12:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },        {
-          Type: "AA",
-          time: "2022-8-7 14:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:""
-        },
-          {
-          Type: "AA",
-          time: "2022-8-7 16:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },
-          {
-          Type: "AA",
-          time: "2022-8-7 16:11:12",
-          errorType: "ResourceError",
-          browserName:"Chrome",
-          path:"http://localhost:3000/home/test.html",
-          src:"./static/index.html"
-        },
-        ]
-      ],
+      WhiteScreenEchartData:[],
+      EchartsRequestData:[],
       echartOption: {
         JSErrorEchartOption:{
           tooltip: {
@@ -345,11 +180,21 @@ export default {
           },
           grid: {
             top: 50,
-            bottom: 25,
+            bottom: 20,
           },
+          legend: {},
           xAxis: [
             {
               type: 'category',
+              axisLine:{
+                lineStyle: {
+                  color:'black'
+                }
+              },
+              axisTick: {
+                show: true,
+                alignWithLabel: true
+              },
               // prettier-ignore
               data: []
             },
@@ -357,7 +202,8 @@ export default {
               show:true,
               type: 'category',
               axisTick: {
-                alignWithLabel: false
+                show: true,
+                alignWithLabel: true
               },
               axisLine: {
                 onZero: false,
@@ -375,22 +221,23 @@ export default {
             }
           ],
           series: [
+
             {
-              name: '当天数据',
+              name: '对照异常数',
               type: 'line',
               smooth: true,
-              color: '#409dfe',
+              color: 'lightgray',
               emphasis: {
                 focus: 'series'
               },
               data: []
             },
+
             {
-              name: '先前数据',
+              name: '今日异常数',
               type: 'line',
-              xAxisIndex: 1,
               smooth: true,
-              color: 'lightgray',
+              color: '#409dfe',
               emphasis: {
                 focus: 'series'
               },
@@ -408,11 +255,21 @@ export default {
           },
           grid: {
             top: 50,
-            bottom: 25,
+            bottom: 20,
           },
+          legend: {},
           xAxis: [
             {
               type: 'category',
+              axisLine:{
+                lineStyle: {
+                  color:'black'
+                }
+              },
+              axisTick: {
+                show: true,
+                alignWithLabel: true,
+              },
               // prettier-ignore
               data: []
             },
@@ -420,7 +277,8 @@ export default {
               show:true,
               type: 'category',
               axisTick: {
-                alignWithLabel: false
+                show: true,
+                alignWithLabel: true,
               },
               axisLine: {
                 onZero: false,
@@ -439,7 +297,92 @@ export default {
           ],
           series: [
             {
-              name: '当天数据',
+              name: '对照异常数',
+              type: 'line',
+              smooth: true,
+              color: 'lightgray',
+              emphasis: {
+                focus: 'series'
+              },
+              data: []
+            },
+
+            {
+              name: '今日异常数',
+              type: 'line',
+              smooth: true,
+              color: '#409dfe',
+              emphasis: {
+                focus: 'series'
+              },
+              data: []
+            },
+          ]
+        },
+        WhiteScreenErrorEchartOption:{
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "line"
+            }
+          },
+          grid: {
+            top: 50,
+            bottom: 20,
+          },
+          legend: {},
+          xAxis: [
+            {
+              type: 'category',
+              axisLine:{
+                lineStyle: {
+                  color:'black'
+                }
+              },
+              axisTick: {
+                show: true,
+                alignWithLabel: true
+              },
+              // prettier-ignore
+              data: []
+            },
+            {
+              show:true,
+              type: 'category',
+              axisTick: {
+                show: true,
+                alignWithLabel: true
+              },
+              axisLine: {
+                onZero: false,
+                lineStyle: {
+                  color: 'gray'
+                }
+              },
+              // prettier-ignore
+              data:[]
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+
+            {
+              name: '对照异常数',
+              type: 'line',
+              smooth: true,
+              color: 'lightgray',
+              emphasis: {
+                focus: 'series'
+              },
+              data: []
+            },
+
+            {
+              name: '今日异常数',
               type: 'line',
               smooth: true,
               color: '#409dfe',
@@ -449,28 +392,20 @@ export default {
               data: []
             },
 
-            {
-              name: '先前数据',
-              type: 'line',
-              xAxisIndex: 1,
-              smooth: true,
-              color: 'lightgray',
-              emphasis: {
-                focus: 'series'
-              },
-              data: []
-            },
           ]
-        },
+        }
       },
     }
   },
   computed:{
     watchJSErrorRate(){
-      return this.echartOption.JSErrorEchartOption.series[0].data
+      return this.echartOption.JSErrorEchartOption.series[1].data
     },
     watchResourcesErrorRate(){
-      return this.echartOption.ResourcesErrorEchartOption.series[0].data
+      return this.echartOption.ResourcesErrorEchartOption.series[1].data
+    },
+    watchWhiteScreenErrorRate(){
+      return this.echartOption.WhiteScreenErrorEchartOption.series[1].data
     }
 
   },
@@ -478,24 +413,54 @@ export default {
     //监控计算rate值
     watchJSErrorRate:{
       handler(newValue){
-        this.rateData.JSErrorRate = Number(((arrayAverage(newValue)/arrayAverage(this.echartOption.JSErrorEchartOption.series[1].data)-1)*100).toFixed(2));
+        this.rateData.JSErrorRate = Number(((arraySum(newValue)/arraySum(this.echartOption.JSErrorEchartOption.series[0].data)-1)*100).toFixed(2));
       },
       immediate: true,
       deep:true
     },
     watchResourcesErrorRate:{
       handler(newValue){
-        this.rateData.ResourceErrorDataRate = Number(((arrayAverage(newValue)/arrayAverage(this.echartOption.ResourcesErrorEchartOption.series[1].data)-1)*100).toFixed(2));
+        this.rateData.ResourceErrorDataRate = Number(((arraySum(newValue)/arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data)-1)*100).toFixed(2));
       },
       immediate: true,
       deep:true
+    },
+    watchWhiteScreenErrorRate:{
+      handler(newValue){
+        this.rateData.whiteScreenErrorRate = Number(((arraySum(newValue)/arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data)-1)*100).toFixed(2));
+      },
+      immediate: true,
+      deep:true
+    },
+    WhiteScreenEchartData: {
+      handler(newValue){
+        this.WhiteScreenEchartData=newValue;
+        initWhiteErrorEchartsData(this.WhiteScreenEchartData,this.echartOption.WhiteScreenErrorEchartOption)
+      },
+      immediate: true
+    },
+    EchartsRequestData: {
+      handler(newValue){
+        this.EchartsRequestData = newValue;
+        initJSErrorEchartsData(this.EchartsRequestData,this.echartOption,this.RingData)
+      },
+      immediate: true
+    },
+    RingData:{
+      handler(){
+        this.RingView = false
+        this.$nextTick(() => {
+          this.RingView = true;
+        });
+      },
+      deep:true
     }
+
   },
   mounted() {
+    this.getEchartsData();
     this.today = dayjs().subtract(1, "week").format("YYYY-MM-DD");
-    initJSErrorEchartsData(this.EchartsRequestData,this.echartOption);
-
-
+    // initJSErrorEchartsData(this.EchartsRequestData,this.echartOption,this.RingData);
   },
   created() {
     //手动计算rate值，但是现在watch监控了首次，不需要添加
@@ -505,9 +470,20 @@ export default {
   },
   methods:{
     toDetail(routerName){
-      this.echartOption.JSErrorEchartOption.series[0].data = [0,0,1,0,0,0,0,0,0,0,0,0];
-      this.echartOption.ResourcesErrorEchartOption.series[0].data = [1,50,1,1,1,1,0,1,2,2,2,2];
+      this.echartOption.JSErrorEchartOption.series[1].data = [0,0,1,0,0,0,0,0,0,0,0,0];
+      this.echartOption.ResourcesErrorEchartOption.series[1].data = [1,50,1,1,1,1,0,1,2,2,2,2];
       console.log(routerName);
+    },
+    getEchartsData() {
+      axios.get("https://console-mock.apipost.cn/app/mock/project/16aefb06-d29a-4884-c2e2-8dd788f9f810/e")
+      .then((res)=>{
+        this.WhiteScreenEchartData=res.data;
+      })
+      axios.get("https://console-mock.apipost.cn/app/mock/project/0bc9dcef-c9fe-438e-a463-34cd8ef3f59f//JSTest")
+          .then((res) => {
+            this.EchartsRequestData = res.data
+          })
+
     }
   },
 };
@@ -521,36 +497,38 @@ export default {
 }
 .overview {
   display: flex;
-  height: 180px;
-}
+  flex-flow: row;
+  height: 220px;
+  text-align: center;
 
+  .ring{
+    width: 15%;
+  }
+}
 .details {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   padding-top: 20px;
   .el-card {
-    min-width: 28%;
+    min-width: 24%;
+    max-width: 33%;
     display: flex;
     flex-flow: row wrap;
     margin-top: 5px;
     justify-content: center;
-
-
   }
 }
-
 .miniTitle {
   text-align: center;
   vertical-align: bottom;
-  margin: 0 5px 15px 5px;
+  margin: 0 5px 10px 5px;
 
 
   .title{
     font-size: x-large;
     font-weight: bolder;
   }
-
   .titleDetails{
     color: lightgray;
     float: right;
@@ -561,5 +539,6 @@ export default {
     cursor: pointer;
   }
 }
+
 
 </style>
