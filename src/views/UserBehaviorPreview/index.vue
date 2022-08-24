@@ -32,7 +32,7 @@
       <el-row
         :gutter="20"
         type="flex"
-        justify="space-around"
+        justify="center"
       >
         <el-col :span="10">
           <Echarts
@@ -61,6 +61,28 @@
           </Echarts>
         </el-col>
       </el-row>
+    </div>
+    <div class="flex-box">
+      <div
+        v-for="(pageStop,index) in pageStopArr"
+        :key="index"
+        class="flex-box-item"
+        :span="20"
+      >
+        <Echarts
+          :width="400"
+          :height="300"
+          :echart-option="option(pageStop.pageData)"
+          :title-name="pageStop.page"
+          :title-date="pageStop.percent"
+          :day="today"
+          times="较前一天"
+        >
+          <div slot="explain">
+            {{ pageStop.title }}
+          </div>
+        </Echarts>
+      </div>
     </div>
   </div>
 </template>

@@ -21,7 +21,7 @@ export default {
     mounted() {
         this.today = this.$dayjs().format("YYYY-MM-DD")
         for (let i = 0; i < 7; i++) {
-            this.date.push(this.$dayjs(new Date().getTime() - (86400000 * (i + 1))).format('MM-DD'));
+            this.date.push(this.$dayjs(new Date().getTime() - (86400000 * (i))).format('MM-DD'));
         }
         this.getUvOrPv();
         this.getPageStopTime()
@@ -102,7 +102,48 @@ export default {
                     }
                 ]
             };
+        },
+        option(){
+            return function(data){
+                return{
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: this.date,
+                            axisTick: {
+                                alignWithLabel: true
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: 'Direct',
+                            type: 'bar',
+                            barWidth: '60%',
+                            data:data
+                        }
+                    ]
+                };
+            }
         }
+
 
     },
     methods: {
@@ -110,33 +151,14 @@ export default {
             let { status, data } = await this.$api.getUvOrPv();
             if (status === 200) {
                 console.log('开始执行');
+                let arr = ['today','one','two','thr','fou','fiv']
                 for (let i in data) {
-                    switch (i) {
-                        case 'one':
-                            this.PvOptionData[0] = (data[i][0] ? data[i][0].userbehaviorPv : 0);
-                            this.UvOptionData[0] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
-                            break
-                        case 'two':
-                            this.PvOptionData[1] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
-                            this.UvOptionData[1] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
-                            break
-                        case 'thr':
-                            this.PvOptionData[2] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
-                            this.UvOptionData[2] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
-                            break
-                        case 'fou':
-                            this.PvOptionData[3] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
-                            this.UvOptionData[3] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
-                            break
-                        case 'fiv':
-                            this.PvOptionData[4] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
-                            this.UvOptionData[4] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
-                            break
-                        case 'six':
-                            this.PvOptionData[5] = (data[i][0] ? data[i][0].userbehaviorPv : 0)
-                            this.UvOptionData[5] = (data[i][0] ? data[i][0].userbehaviorUv : 0);
-                    }
-                    
+                    arr.forEach(item => {
+                        if(item === i){
+                            this.PvOptionData.push( (data[i][0] ? data[i][0].userbehaviorPv : 0));
+                            this.UvOptionData.push( (data[i][0] ? data[i][0].userbehaviorUv : 0));
+                        }
+                    })
                     this.PvData.push({ [i]: data[i][0]?.userbehaviorPv });
                     this.UvData.push({ [i]: data[i][0]?.userbehaviorUv });
                 }
@@ -205,11 +227,18 @@ export default {
             let {status,data} =  await this.$api.getPageStopTime()
             if(status === 200){
                 this.pageStopArr = data.page
+                let sum = 0
+                let sum1= 0
                 this.pageStopArr.forEach(item => {
-                    item.pageData = item.pageData.split(',')
-                    this.dataGroups[2].number +=  parseInt(item.pageData[0])
+                    item.pageData = item.pageData.split(',').slice(0,7)
+                    item.percent = Math.floor((item.pageData[0] - item.pageData[1]) / item.pageData[1] * 10000) /100
+                     sum =  this.dataGroups[2].number +=  parseInt(item.pageData[0])
+                     sum1 +=  parseInt(item.pageData[1])
+                    item.title = `这是${item.page}页面的总访问时间`
                 });
+                this.dataGroups[2].percent = Math.floor((sum - sum1)/sum1*10000) /100
             }
+            
         }
     },
 };
