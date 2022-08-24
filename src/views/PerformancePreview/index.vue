@@ -354,7 +354,7 @@ export default {
     // 记得要拿变量接收，否则不能清除掉这个循环；如果不清除，用户要是跳转到其他页面，setInterval会仍在循环！
     this.timer = polling(this.getPerformance, 2000);
   },
-  // 轮询的销毁要写在destroyed()里，不然不能 clearInterval() 掉！
+  // 轮询的销毁要写在destroyed()里，写在beforeUnmount或者unmounted里，都不能 clearInterval() 掉！
   destroyed() {
     clearInterval(this.timer);
   },
