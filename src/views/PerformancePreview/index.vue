@@ -16,13 +16,6 @@
           :value="item.value"
         />
       </el-select>
-      <el-button
-        icon="el-icon-refresh-right"
-        size="mini"
-        circle
-        class="btn"
-        @click="getPerformance"
-      />
     </div>
     <el-card class="part">
       <div class="head-content">
@@ -37,7 +30,8 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.fp:weekAverage.fp }}ms</span>
+
+          <span class="value">{{ flag? todayAverage.performanceFp:weekAverage.performanceFp }}ms</span>
         </div>
 
         <div class="head-counts">
@@ -51,7 +45,7 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.fcp:weekAverage.fcp }}ms</span>
+          <span class="value">{{ flag? todayAverage.performanceFcp:weekAverage.performanceFcp }}ms</span>
         </div>
         <div class="head-counts">
           <label>domReady DOM阶段渲染耗时
@@ -64,7 +58,7 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.domReady:weekAverage.domReady }}ms</span>
+          <span class="value">{{ flag? todayAverage.performanceDomready:weekAverage.performanceDomready }}ms</span>
         </div>
         <div class="head-counts">
           <label>dnsTime DNS解析耗时
@@ -77,7 +71,7 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.dnsTime:weekAverage.dnsTime }}ms</span>
+          <span class="value">{{ flag? todayAverage.performanceDnstime:weekAverage.performanceDnstime }}ms</span>
         </div>
         <div class="head-counts">
           <label>response 响应数据传输耗时
@@ -90,7 +84,7 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.response:weekAverage.response }}ms</span>
+          <span class="value">{{ flag? todayAverage.performanceResponse:weekAverage.performanceResponse }}ms</span>
         </div>
         <div class="head-counts">
           <label>resources 资源加载耗时
@@ -103,7 +97,7 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.resources:weekAverage.resources }}ms</span>
+          <span class="value">{{ flag? todayAverage.performanceResources:weekAverage.performanceResources }}ms</span>
         </div>
         <div class="head-counts">
           <label>firstPackage 首包时间耗时
@@ -116,7 +110,7 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.firstPackage:weekAverage.firstPackage }}ms</span>
+          <span class="value">{{ flag? todayAverage.performanceFirstpackage:weekAverage.performanceFirstpackage }}ms</span>
         </div>
         <div class="head-counts">
           <label>pageFull 页面完全加载耗时
@@ -129,7 +123,7 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-          <span class="value">{{ flag? todayAverage.pageFull:weekAverage.pageFull }}ms</span>
+          <span class="value">{{ flag? todayAverage.performancePagefull:weekAverage.performancePagefull }}ms</span>
         </div>
       </div>
     </el-card>
@@ -141,9 +135,9 @@
           <Echart
             class="echarts"
             title-name="FP"
-            :title-date="optionCompare.fp"
-            :week="weekSeries.fp"
-            :today="todaySeries.fp"
+            :title-date="optionCompare.performanceFp"
+            :week="weekSeries.performanceFp"
+            :today="todaySeries.performanceFp"
           >
             <template #explain>
               首次渲染,
@@ -156,9 +150,9 @@
           <Echart
             class="echarts"
             title-name="FCP"
-            :title-date="optionCompare.fcp"
-            :week="weekSeries.fcp"
-            :today="todaySeries.fcp"
+            :title-date="optionCompare.performanceFcp"
+            :week="weekSeries.performanceFcp"
+            :today="todaySeries.performanceFcp"
           >
             <template #explain>
               首次内容渲染,表示浏览器渲染出第一个DOM内容的时间(如果body带背景色，则FCP大于FP)
@@ -170,9 +164,9 @@
           <Echart
             class="echarts"
             title-name="domReady"
-            :title-date="optionCompare.domReady"
-            :week="weekSeries.domReady"
-            :today="todaySeries.domReady"
+            :title-date="optionCompare.performanceDomready"
+            :week="weekSeries.performanceDomready"
+            :today="todaySeries.performanceDomready"
           >
             <template #explain>
               DOM阶段渲染耗时
@@ -184,9 +178,9 @@
           <Echart
             class="echarts"
             title-name="dnsTime"
-            :title-date="optionCompare.dnsTime"
-            :week="weekSeries.dnsTime"
-            :today="todaySeries.dnsTime"
+            :title-date="optionCompare.performanceDnstime"
+            :week="weekSeries.performanceDnstime"
+            :today="todaySeries.performanceDnstime"
           >
             <template #explain>
               DNS解析耗时, 可观察域名解析服务是否正常
@@ -198,9 +192,9 @@
           <Echart
             class="echarts"
             title-name="response"
-            :title-date="optionCompare.response"
-            :week="weekSeries.response"
-            :today="todaySeries.response"
+            :title-date="optionCompare.performanceResponse"
+            :week="weekSeries.performanceResponse"
+            :today="todaySeries.performanceResponse"
           >
             <template #explain>
               响应数据传输耗时, 观察网络是否正常
@@ -212,9 +206,9 @@
           <Echart
             class="echarts"
             title-name="resources"
-            :title-date="optionCompare.resources"
-            :week="weekSeries.resources"
-            :today="todaySeries.resources"
+            :title-date="optionCompare.performanceResources"
+            :week="weekSeries.performanceResources"
+            :today="todaySeries.performanceResources"
           >
             <template #explain>
               资源加载耗时, 观察文档流是否过大
@@ -226,9 +220,9 @@
           <Echart
             class="echarts"
             title-name="firstPackage"
-            :title-date="optionCompare.firstPackage"
-            :week="weekSeries.firstPackage"
-            :today="todaySeries.firstPackage"
+            :title-date="optionCompare.performanceFirstpackage"
+            :week="weekSeries.performanceFirstpackage"
+            :today="todaySeries.performanceFirstpackage"
           >
             <template #explain>
               首包时间耗时, DNS解析到响应返回给浏览器第一个字节的时间
@@ -240,9 +234,9 @@
           <Echart
             class="echarts"
             title-name="pageFull"
-            :title-date="optionCompare.pageFull"
-            :week="weekSeries.pageFull"
-            :today="todaySeries.pageFull"
+            :title-date="optionCompare.performancePagefull"
+            :week="weekSeries.performancePagefull"
+            :today="todaySeries.performancePagefull"
           >
             <template #explain>
               页面完全加载时间
@@ -258,7 +252,7 @@
 // 我自己二次封装了Echarts，放在同级目录下，而且取名的时候换成Echart(少个s)，以免和全局注册的Echarts冲突
 import Echart from "./echart.vue";
 import { performanceGET } from "@/utils/api.js";
-// import { polling } from "@/utils/polling.js";
+import { polling } from "@/utils/polling.js";
 import { getAve, processData } from "./processData.js";
 
 export default {
@@ -280,61 +274,64 @@ export default {
       // 选择器切换 “过去一周”和“今日” 的flag
       flag: true,
 
-      // 上一周数据
+      // 上一周每日平均值
       weekSeries: {
-        fp: null,
-        fcp: null,
-        domReady: null,
-        dnsTime: null,
-        response: null,
-        resources: null,
-        firstPackage: null,
-        pageFull: null,
+        performanceFp: null,
+        performanceFcp: null,
+        performanceDomready: null,
+        performanceDnstime: null,
+        performanceResponse: null,
+        performanceResources: null,
+        performanceFirstpackage: null,
+        performancePagefull: null,
       },
       // 今日数据
       todaySeries: {
-        fp: null,
-        fcp: null,
-        domReady: null,
-        dnsTime: null,
-        response: null,
-        resources: null,
-        firstPackage: null,
-        pageFull: null,
+        performanceFp: null,
+        performanceFcp: null,
+        performanceDomready: null,
+        performanceDnstime: null,
+        performanceResponse: null,
+        performanceResources: null,
+        performanceFirstpackage: null,
+        performancePagefull: null,
       },
       // 周性能指标平均值
       weekAverage: {
-        fp: null,
-        fcp: null,
-        domReady: null,
-        dnsTime: null,
-        response: null,
-        resources: null,
-        firstPackage: null,
-        pageFull: null,
+        performanceFp: null,
+        performanceFcp: null,
+        performanceDomready: null,
+        performanceDnstime: null,
+        performanceResponse: null,
+        performanceResources: null,
+        performanceFirstpackage: null,
+        performancePagefull: null,
       },
       // 今日性能指标平均值
       todayAverage: {
-        fp: null,
-        fcp: null,
-        domReady: null,
-        dnsTime: null,
-        response: null,
-        resources: null,
-        firstPackage: null,
-        pageFull: null,
+        performanceFp: null,
+        performanceFcp: null,
+        performanceDomready: null,
+        performanceDnstime: null,
+        performanceResponse: null,
+        performanceResources: null,
+        performanceFirstpackage: null,
+        performancePagefull: null,
       },
       // 较前一周
       optionCompare: {
-        fp: null,
-        fcp: null,
-        domReady: null,
-        dnsTime: null,
-        response: null,
-        resources: null,
-        firstPackage: null,
-        pageFull: null,
+        performanceFp: null,
+        performanceFcp: null,
+        performanceDomready: null,
+        performanceDnstime: null,
+        performanceResponse: null,
+        performanceResources: null,
+        performanceFirstpackage: null,
+        performancePagefull: null,
       },
+      // 用于比较上一次轮询过来的数据
+      dataFlag: {},
+      timer: null,
     };
   },
   computed: {},
@@ -354,10 +351,13 @@ export default {
     },
   },
   created() {
-    // this.getPerformance();
-    // polling(this.getPerformance, 3000);
+    // 记得要拿变量接收，否则不能清除掉这个循环；如果不清除，用户要是跳转到其他页面，setInterval会仍在循环！
+    this.timer = polling(this.getPerformance, 2000);
   },
-  mounted() {},
+  // 轮询的销毁要写在destroyed()里，不然不能 clearInterval() 掉！
+  destroyed() {
+    clearInterval(this.timer);
+  },
   methods: {
     // get请求
     getPerformance() {
@@ -367,10 +367,8 @@ export default {
             "performanceGET轮询",
             JSON.stringify(this.dataFlag) !== JSON.stringify(res.data)
           );
-
           if (JSON.stringify(this.dataFlag) !== JSON.stringify(res.data)) {
             this.dataFlag = res.data;
-
             let data = processData(res.data);
             this.todaySeries = data.todaySeries;
             this.weekSeries = data.weekSeries;
