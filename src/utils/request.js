@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message,  } from 'element-ui'
 const service = axios.create({
+  baseURL:'/dev-api',
   timeout: 10000
 })
-
 
 // 请求拦截器
 service.interceptors.request.use(config => {
@@ -16,22 +16,18 @@ service.interceptors.request.use(config => {
 // 响应拦截器
 service.interceptors.response.use(response => {
   const res = response.data
-  //
-  if (res.code !== 200) {
+  if(res.status !== 200){
     Message({
-      message: res.msg || 'Error',
+      message: res.error,
       type: 'error',
       duration: 5 * 1000
     })
-    return Promise.reject(res.msg || 'Error')
-  } else {
-    return res
   }
+  return res
 },
 error => {
-  // console.log(error)
   Message({
-    message: error.msg,
+    message: error,
     type: 'error',
     duration: 5 * 1000
   })
