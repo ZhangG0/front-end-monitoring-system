@@ -197,22 +197,14 @@ module.exports = {
         compress: true,
         historyApiFallback: true, // 解决vue-router刷新404问题
         proxy: {
-            '/dev-api/sohu': {
-                target: 'http://pv.sohu.com',
-                changeOrigin: true,
-                pathRewrite: {                   //路径重写
-                    '^/dev-api/sohu': ''                     //选择忽略拦截器里面的内容
+            '/api' : { // '/api'是代理标识，一般是每个接口前的相同部分
+                target: "http://175.178.236.203:8080", // 请求地址，一般是服务器地址
+                changeOrigin: true, // 是否进行跨域,
+                pathRewrite:{
+                    '/api':''
                 }
-            },
-            '/dev-api': {
-                target: 'http://175.178.236.203:8080',
-                changeOrigin: true,
-                pathRewrite: {                   //路径重写
-                    '^/dev-api': ''                     //选择忽略拦截器里面的内容
-                }
-            },
-
-        },
+            }
+        }
     },
     mode: isProduction ? "production" : "development",
     devtool: isProduction ? "source-map" : "cheap-module-source-map",

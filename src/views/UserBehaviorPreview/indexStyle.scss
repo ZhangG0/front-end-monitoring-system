@@ -1,0 +1,74 @@
+.container {
+  width: 100%;
+}
+
+.overview {
+  height: 200px;
+}
+
+.traffic__data {
+  display: flex;
+  justify-content: space-evenly;
+
+  &__item {
+    padding: 0 8px 8px 8px;
+
+    &__title {
+      font-size: 13px;
+      color: #666;
+    }
+
+    &__number {
+      font-size: 20px;
+      color: #363b52;
+      padding: 10px 0px;
+    }
+  }
+}
+
+.trendGraph {
+
+  margin-bottom: 50px;
+  display: flex;
+  margin-top: 40px;
+
+}
+
+.el-row {
+  width: 100%;
+}
+
+.font-percent {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.traffic__data__item__number {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.flex-box {
+  width: 100%;
+  display: grid;
+  /* 使用grid-template-column 属性指定每列的宽度,可以是固定宽度px，也可以是浮动宽度fr，fr是grid布局专用单位，代表grid剩余空间 */
+  /* grid-template-columns: 300px; */
+  /* 这里有三个数据，就说明grid的分布图为3列形式，这里都相等表示均分剩余空间 */
+  grid-template-columns: 1fr 1fr 1fr;
+  /* 使用column-gap属性设置列间距 */
+  column-gap: 10px;
+  /* 使用row-gap设置行间距 */
+  row-gap: 20px;
+  /* 或者使用gap属性统一设置，一下代码等同于上两行代码 */
+  gap: 10px;
+  margin-left: 3%;
+}
+
+.flex-box-item {
+  margin-bottom: 20px;
+  margin-right: 60px;
+}
+
+.flex-box-item:last-child {
+  margin-right: auto;
+}

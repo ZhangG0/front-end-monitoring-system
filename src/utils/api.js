@@ -25,3 +25,5 @@ export const InterfaceErrorGet = () => {
     method: 'get',
   })
 }
+export const getUvOrPv = () => service({ url: "/user/performance", method: 'get' })
+export const getPageStopTime = () => service({ url: "/page/getPagesTime", method: 'get' })

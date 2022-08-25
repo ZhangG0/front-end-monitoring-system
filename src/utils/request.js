@@ -1,21 +1,17 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message,  } from 'element-ui'
 const service = axios.create({
-  baseURL: '/dev-api',
-  // baseURL: 'http://175.178.236.203:8080',
-  timeout: 10000,
+  baseURL:'/api',
+  timeout: 10000
 })
 
 // 请求拦截器
-service.interceptors.request.use(
-  (config) => {
-    return config
-  },
-  (error) => {
-    console.log(error)
-    return Promise.reject(error)
-  }
-)
+service.interceptors.request.use(config => {
+  return config
+}, error => {
+  console.log(error)
+  return Promise.reject(error)
+})
 
 // 响应拦截器
 service.interceptors.response.use(
