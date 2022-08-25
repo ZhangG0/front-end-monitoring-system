@@ -1,21 +1,12 @@
 <template>
-  <div>
-    <Echarts
-      :width="500"
-      :height="500"
-      :echart-option="echartOption"
-      :title-date="0.9"
-      title-name="我"
-    >
-      <div slot="explain">
-        提示文字1111111111111111111111111111111111111111111111
-      </div>
-    </Echarts>
-    <div v-big="num" />
-    <div ref="numRef">
-      {{ num }}
-    </div>
-  </div>
+  <el-card>
+    <h2>欢迎来到，前端监控平台</h2>
+    <p>本监控旨在监控业务项目的前端错误问题，性能为题，接口问题，以及用户习惯等，为的是使前端功能稳定</p>
+    <h1>注意事项</h1>
+    <p>
+      在页面无切换的情况下，在为了用户体验和必要性的综合考虑下，我们的数据将会五分钟刷新一次最新数据并展示。
+    </p>
+  </el-card>
 </template>
 
 <script>
