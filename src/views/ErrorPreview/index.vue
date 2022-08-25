@@ -145,6 +145,7 @@ import dayjs from "dayjs"
 import { arraySum } from "@/utils/common"
 import JSRing from "@/views/ErrorPreview/JSRing"
 import { JSErrorGET, whiteScreenErrorGET,InterfaceErrorGet } from "@/utils/api.js"
+import {polling} from "@/utils/polling";
 
 export default {
 	name: "Error",
@@ -465,6 +466,7 @@ export default {
 					],
 				},
 			},
+      timer: null,
 		}
 	},
 	computed: {
@@ -485,41 +487,54 @@ export default {
 		//监控计算rate值
 		watchJSErrorRate: {
 			handler(newValue) {
-				this.rateData.JSErrorRate = Number(
-					(
-						(arraySum(newValue) / arraySum(this.echartOption.JSErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.JSErrorEchartOption.series[0].data) === 0){
+          this.rateData.JSErrorRate = 100;
+        }else {
+          this.rateData.JSErrorRate = Number(
+              (
+                  (arraySum(newValue) / arraySum(this.echartOption.JSErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
+
 			},
 			immediate: true,
 			deep: true,
 		},
 		watchResourcesErrorRate: {
 			handler(newValue) {
-				this.rateData.ResourceErrorDataRate = Number(
-					(
-						(arraySum(newValue) /
-							arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) === 0){
+          this.rateData.ResourceErrorDataRate = 100;
+        }else {
+          this.rateData.ResourceErrorDataRate = Number(
+              (
+                  (arraySum(newValue) /
+                      arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
 			},
 			immediate: true,
 			deep: true,
 		},
 		watchWhiteScreenErrorRate: {
 			handler(newValue) {
-				this.rateData.whiteScreenErrorRate = Number(
-					(
-						(arraySum(newValue) /
-							arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) === 0){
+          this.rateData.whiteScreenErrorRate = 100;
+        }else {
+          this.rateData.whiteScreenErrorRate = Number(
+              (
+                  (arraySum(newValue) /
+                      arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
 			},
 			immediate: true,
 			deep: true,
@@ -539,7 +554,6 @@ export default {
 				this.EchartsRequestData = newValue
 				initJSErrorEchartsData(this.EchartsRequestData, this.echartOption, this.RingData)
 			},
-			immediate: true,
 		},
 		interfaceEchartData: {
 			handler(newValue) {
@@ -553,14 +567,19 @@ export default {
 		},
 		watchinterfaceErrorRate: {
 			handler(newValue) {
-				this.rateData.interfaceErrorRate = Number(
-					(
-						(arraySum(newValue) /
-							arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) === 0){
+          this.rateData.interfaceErrorRate = 100;
+        }else {
+          this.rateData.interfaceErrorRate = Number(
+              (
+                  (arraySum(newValue) /
+                      arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
+
 			},
 			immediate: true,
 			deep: true,
@@ -576,12 +595,17 @@ export default {
 		},
 	},
 	mounted() {
-		this.getEchartsData()
-		this.today = dayjs().subtract(1, "week").format("YYYY-MM-DD")
+    // 轮询请求数据
+    this.timer = polling(this.getEchartsData)
+
+		this.today = dayjs().format("YYYY-MM-DD")
 	},
 	created() {
 	},
-	methods: {
+  destroyed() {
+    clearInterval(this.timer);
+  },
+  methods: {
 		toDetail(routerName) {
 			this.echartOption.JSErrorEchartOption.series[1].data = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			this.echartOption.ResourcesErrorEchartOption.series[1].data = [
@@ -592,6 +616,10 @@ export default {
 		async getEchartsData() {
       const { data } = await InterfaceErrorGet()
       this.interfaceEchartData = [[...data.today], [...data.seven]]
+      // InterfaceErrorGet().then((res) => {
+      //   this.interfaceEchartData.push(res.data.today)
+      //   this.interfaceEchartData.push(res.data.seven)
+      // })
 			whiteScreenErrorGET().then((res) => {
 				this.WhiteScreenEchartData.push(res.data.today)
 				this.WhiteScreenEchartData.push(res.data.seven)
