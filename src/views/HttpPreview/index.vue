@@ -33,27 +33,27 @@
             )
           "
           border
-          style="width: 100%;  overflow-y: auto;"
+          style="width: 100%; overflow-y: auto"
         >
-          <el-table-column prop="url" label="url" width="180">
+          <el-table-column prop="requestmonitorUrl" label="url" width="300">
             <template slot-scope="scope">
               <a
-                :href="scope.row.url"
+                :href="scope.row.requestmonitorUrl"
                 class="content_url"
                 @click.stop.prevent="visibleDialog(scope.row)"
-                >{{ scope.row.url }}</a
+                >{{ scope.row.requestmonitorUrl }}</a
               >
             </template>
           </el-table-column>
-          <el-table-column prop="method" label="方法"> </el-table-column>
-          <el-table-column prop="status" label="状态码"> </el-table-column>
-          <el-table-column prop="success" label="是否成功">
+          <el-table-column prop="requestmonitorMethod" label="方法"> </el-table-column>
+          <el-table-column prop="requestmonitorStatus" label="状态码"> </el-table-column>
+          <el-table-column prop="requestmonitorSuccess" label="是否成功">
             <template slot-scope="scope">
-              <div>{{ scope.row.success === true ? "是" : "否" }}</div>
+              <div>{{ scope.row.success === 1 ? "是" : "否" }}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="duration" label="请求时长"> </el-table-column>
-          <el-table-column prop="requesType" label="请求方式">
+          <el-table-column prop="requestmonitorDuration" label="请求时长"> </el-table-column>
+          <el-table-column prop="requestmonitorType" label="请求方式">
           </el-table-column>
         </el-table>
       </div>
@@ -71,13 +71,13 @@
     </div>
 
     <el-dialog title="请求返回信息" :visible.sync="dialogVisible" width="30%">
-      <span>{{ row.response }}</span>
+      <span>{{ resposeMessage }}</span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import request from "@/utils/request.js";
 import requestBox from "./components/request-box.vue";
 export default {
   components: {
@@ -90,19 +90,23 @@ export default {
           title: "接口请求总量",
           tips: "发起请求的总数量",
           num: 263,
+          key: 'total'
         },
         {
-          title: "接口请求平均耗时",
+          title: "接口请求平均耗时(ms)",
           tips: "接口请求总时长累加/请求总数",
           num: 214.14,
+          key: 'averageTime'
         },
         {
           title: "接口请求成功率",
           tips: "请求成功数/请求总数",
           num: "100%",
+          key: 'successRate'
         },
       ],
       dialogVisible: false,
+      tableSize: 0,
       tableData: [
         {
           url: "http://www.baidu.com",
@@ -120,6 +124,12 @@ export default {
       pageSize: 10,
     };
   },
+  computed: {
+    resposeMessage: function () {
+      // `this` 指向 vm 实例
+      return this.row.requestmonitorResponse ? this.row.requestmonitorResponse : 'fetch请求无法获取到返回信息'
+    }
+  },
   methods: {
     visibleDialog(row) {
       this.row = row;
@@ -130,20 +140,32 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val;
+    },  
+    calculateTime(arr,num,numType){
+      if(numType === 1){
+        let dutationall = arr.reduce((pre,cur) => pre + cur.requestmonitorDuration,0);
+        return (dutationall/num).toFixed(2);
+      }else if(numType === 0){
+        let successItemLength = arr.filter(item => item.requestmonitorSuccess == 1).length;
+        return ((successItemLength/num)*100).toFixed(2) + '%'
+      }
+      
     },
+    calculateRate(arr,num){
+
+    }
   },
   created() {
-    for (let i = 0; i < 50; i++) {
-      this.tableData.push({
-        url: "http://www.baidu.com",
-        method: "POST",
-        status: "200",
-        success: true,
-        duration: 2300,
-        requesType: "xhr",
-        response: "我是火车王",
-      });
-    }
+    request.get('request/httpRequest').then((res) =>{
+      let averageTime = this.calculateTime(res.data.today, res.data.total,1)
+      let rate = this.calculateTime(res.data.today, res.data.total,0)
+      this.boxList.find(item => item.key == 'total').num = res.data.total || 0;
+      this.boxList.find(item => item.key == 'averageTime').num = averageTime || 0;
+      this.boxList.find(item => item.key == 'successRate').num = rate || '0%';
+      
+      this.tableData = res.data.today
+    })
+
     /*     let orignOpen = XMLHttpRequest.prototype.open;
     function Myopen(method, url, async, username, password) {
       console.log("捕捉到xmlhttprequest.open");
