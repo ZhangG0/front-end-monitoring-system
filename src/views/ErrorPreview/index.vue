@@ -145,6 +145,7 @@ import dayjs from "dayjs"
 import { arraySum } from "@/utils/common"
 import JSRing from "@/views/ErrorPreview/JSRing"
 import { JSErrorGET, whiteScreenErrorGET,InterfaceErrorGet } from "@/utils/api.js"
+import {polling} from "@/utils/polling";
 
 export default {
 	name: "Error",
@@ -465,6 +466,7 @@ export default {
 					],
 				},
 			},
+      timer: null,
 		}
 	},
 	computed: {
@@ -593,12 +595,17 @@ export default {
 		},
 	},
 	mounted() {
-		this.getEchartsData()
+    // 轮询请求数据
+    this.timer = polling(this.getEchartsData)
+
 		this.today = dayjs().format("YYYY-MM-DD")
 	},
 	created() {
 	},
-	methods: {
+  destroyed() {
+    clearInterval(this.timer);
+  },
+  methods: {
 		toDetail(routerName) {
 			this.echartOption.JSErrorEchartOption.series[1].data = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			this.echartOption.ResourcesErrorEchartOption.series[1].data = [
@@ -609,6 +616,10 @@ export default {
 		async getEchartsData() {
       const { data } = await InterfaceErrorGet()
       this.interfaceEchartData = [[...data.today], [...data.seven]]
+      // InterfaceErrorGet().then((res) => {
+      //   this.interfaceEchartData.push(res.data.today)
+      //   this.interfaceEchartData.push(res.data.seven)
+      // })
 			whiteScreenErrorGET().then((res) => {
 				this.WhiteScreenEchartData.push(res.data.today)
 				this.WhiteScreenEchartData.push(res.data.seven)
