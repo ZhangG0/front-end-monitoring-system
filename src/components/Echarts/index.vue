@@ -22,7 +22,7 @@
             </span>
           </div>
           <div class="title-date">
-            <span :style="titleDate >= 0 ?'color:red':'color:greed' ">{{ titleDate }}%</span>
+            <span :style="color">{{ titleDate }}%</span>
           </div>
         </div>
         <div class="card-header-data">

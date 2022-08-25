@@ -35,10 +35,20 @@ export default {
       handler() {
         this.echartsInit()
       },
-      deep:true //考虑到更新option下的子属性
+      deep: true, //考虑到更新option下的子属性
     },
   },
-  computed: {},
+  computed: {
+    color() {
+      let n
+      if (this.titleDate > 0) {
+        n = 'color:red'
+      } else {
+        n = 'color:green'
+      }
+      return n
+    },
+  },
   mounted() {
     this.echartsInit()
     this.initEvent()

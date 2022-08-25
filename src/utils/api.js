@@ -8,20 +8,22 @@ export const performanceGET = () => {
 }
 export const whiteScreenErrorGET = () => {
   return service({
-    url: '/white/getError/whiteScreenError',
+    url: '/white/ts/getError/whiteScreenError',
     method: 'get',
   })
 }
 
 export const JSErrorGET = () => {
   return service({
-    url: '/js/getError/JSError',
+    url: '/js/ts/getError/JSError',
     method: 'get',
   })
 }
 export const InterfaceErrorGet = () => {
   return service({
-    url: '/port/getError/interfaceError',
+    url: '/port/ts/getError/interfaceError',
     method: 'get',
   })
 }
+export const getUvOrPv = () => service({ url: "/user/performance", method: 'get' })
+export const getPageStopTime = () => service({ url: "/page/getPagesTime", method: 'get' })

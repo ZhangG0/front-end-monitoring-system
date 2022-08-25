@@ -1,13 +1,13 @@
-class Performance {
+export class Performance {
   constructor() {
-    this.fp = []
-    this.fcp = []
-    this.domReady = []
-    this.dnsTime = []
-    this.response = []
-    this.resources = []
-    this.firstPackage = []
-    this.pageFull = []
+    this.performanceFp = []
+    this.performanceFcp = []
+    this.performanceDomready = []
+    this.performanceDnstime = []
+    this.performanceResponse = []
+    this.performanceResources = []
+    this.performanceFirstpackage = []
+    this.performancePagefull = []
   }
 }
 
@@ -27,7 +27,7 @@ export function getAve(arr) {
 function getHourArray(arr, hour) {
   let hourArray = arr.filter((data) => {
     let re = /\s\d+/
-    let h = re.exec(data.time) - 0
+    let h = re.exec(data.performanceTime) - 0
     if (h == hour) {
       return true
     } else {
@@ -58,19 +58,20 @@ function pushData(series, array) {
 }
 
 // 处理数据
-export function processData(res) {
+export function processData(resData) {
   let todaySeries = new Performance()
   let weekSeries = new Performance()
 
-  // 处理日数据res[0]
+  // 处理日数据resData[0]
   for (let hour = 0; hour < 24; hour++) {
-    let hourArray = getHourArray(res[0], hour)
+    let hourArray = getHourArray(resData.today, hour)
     pushData(todaySeries, hourArray)
   }
 
-  // 处理周数据res[1]-[7]
-  for (let i = 1; i < res.length; i++) {
-    pushData(weekSeries, res[i])
+  let weekArray = ['sev', 'six', 'fiv', 'fou', 'thr', 'two', 'one']
+  // 处理周数据resData[1]-[7]
+  for (let i = 0; i < weekArray.length; i++) {
+    pushData(weekSeries, resData[weekArray[i]])
   }
 
   return {
