@@ -2,7 +2,7 @@
   <div class="container">
     <el-card class="overview">
       <div slot="header">
-        <span>流量数据统计</span>
+        <span class="mini-title">流量数据统计</span>
       </div>
       <div class="traffic__data">
         <!-- 展示pv,uv统计的总数据 -->
@@ -62,6 +62,7 @@
         </el-col>
       </el-row>
     </div>
+
     <div class="flex-box">
       <div
         v-for="(pageStop,index) in pageStopArr"

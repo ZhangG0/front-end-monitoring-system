@@ -30,7 +30,6 @@
               <span class="iconfont icon-wenhao" />
             </el-tooltip>
           </label>
-
           <span class="value">{{ flag? todayAverage.performanceFp:weekAverage.performanceFp }}ms</span>
         </div>
 
@@ -47,6 +46,7 @@
           </label>
           <span class="value">{{ flag? todayAverage.performanceFcp:weekAverage.performanceFcp }}ms</span>
         </div>
+
         <div class="head-counts">
           <label>domReady DOM阶段渲染耗时
             <el-tooltip
@@ -60,12 +60,13 @@
           </label>
           <span class="value">{{ flag? todayAverage.performanceDomready:weekAverage.performanceDomready }}ms</span>
         </div>
+
         <div class="head-counts">
           <label>dnsTime DNS解析耗时
             <el-tooltip
               class="item"
               effect="dark"
-              content="DNS解析耗时, 可观察域名解析服务是否正常"
+              content="DNS解析耗时, 可观察域名解析服务是否正常。 【如果浏览器没有进行DNS查询（比如使用了cache缓存或采用了持久连接），则dnsTime的值将为0】"
               placement="top-start"
             >
               <span class="iconfont icon-wenhao" />
@@ -73,6 +74,7 @@
           </label>
           <span class="value">{{ flag? todayAverage.performanceDnstime:weekAverage.performanceDnstime }}ms</span>
         </div>
+
         <div class="head-counts">
           <label>response 响应数据传输耗时
             <el-tooltip
@@ -86,6 +88,7 @@
           </label>
           <span class="value">{{ flag? todayAverage.performanceResponse:weekAverage.performanceResponse }}ms</span>
         </div>
+
         <div class="head-counts">
           <label>resources 资源加载耗时
             <el-tooltip
@@ -99,6 +102,7 @@
           </label>
           <span class="value">{{ flag? todayAverage.performanceResources:weekAverage.performanceResources }}ms</span>
         </div>
+
         <div class="head-counts">
           <label>firstPackage 首包时间耗时
             <el-tooltip
@@ -112,6 +116,7 @@
           </label>
           <span class="value">{{ flag? todayAverage.performanceFirstpackage:weekAverage.performanceFirstpackage }}ms</span>
         </div>
+
         <div class="head-counts">
           <label>pageFull 页面完全加载耗时
             <el-tooltip
@@ -183,7 +188,8 @@
             :today="todaySeries.performanceDnstime"
           >
             <template #explain>
-              DNS解析耗时, 可观察域名解析服务是否正常
+              DNS解析耗时, 可观察域名解析服务是否正常。
+              【如果浏览器没有进行DNS查询（比如使用了cache缓存或采用了持久连接），则dnsTime的值将为0】
             </template>
           </Echart>
         </div>
@@ -251,7 +257,7 @@
 <script>
 // 我自己二次封装了Echarts，放在同级目录下，而且取名的时候换成Echart(少个s)，以免和全局注册的Echarts冲突
 import Echart from "./echart.vue";
-import { performanceGET } from "@/utils/api.js";
+// import { performanceGET } from "@/utils/api.js";【已经换成this.$api.】
 import { polling } from "@/utils/polling.js";
 import { getAve, processData } from "./processData.js";
 
@@ -362,7 +368,8 @@ export default {
   methods: {
     // get请求
     getPerformance() {
-      performanceGET()
+      this.$api
+        .performanceGET()
         .then((res) => {
           console.log(
             "performanceGET轮询",
