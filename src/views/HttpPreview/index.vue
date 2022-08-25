@@ -123,6 +123,7 @@ export default {
         },
       ],
       row: {},
+      timer: null,
       currentPage: 1,
       // 每页多少条
       pageSize: 10,
@@ -178,8 +179,11 @@ export default {
   },
   created() {
     // this.handleProcessData();
-    polling(this.handleProcessData)
+    this.timer = polling(this.handleProcessData)
   },
+  destroyed(){
+    clearInterval(this.timer)
+  }
 };
 </script>
 
