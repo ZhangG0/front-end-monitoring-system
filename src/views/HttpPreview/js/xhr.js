@@ -62,3 +62,29 @@ xhr.prototype.send = function (value) {
 
     return _originSend.apply(this, arguments)
 }
+
+
+
+    /*     let orignOpen = XMLHttpRequest.prototype.open;
+    function Myopen(method, url, async, username, password) {
+      console.log("捕捉到xmlhttprequest.open");
+      console.log(
+        "request info need report-----",
+        method,
+        url,
+        async,
+        username,
+        password
+      );
+      let startTime = Date.now();
+      orignOpen.call(this, method, url, async, username, password);
+      let that = this;
+      that.addEventListener.call(that, "load", function (event) {
+        let endTime = Date.now();
+        let duration = endTime - startTime;
+        console.log("捕捉到xmlhttprequest.load", duration);
+        console.log(event);
+      });
+    }
+
+    XMLHttpRequest.prototype.open = Myopen; */

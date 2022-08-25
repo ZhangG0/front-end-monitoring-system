@@ -45,14 +45,17 @@
               >
             </template>
           </el-table-column>
-          <el-table-column prop="requestmonitorMethod" label="方法"> </el-table-column>
-          <el-table-column prop="requestmonitorStatus" label="状态码"> </el-table-column>
+          <el-table-column prop="requestmonitorMethod" label="方法">
+          </el-table-column>
+          <el-table-column prop="requestmonitorStatus" label="状态码">
+          </el-table-column>
           <el-table-column prop="requestmonitorSuccess" label="是否成功">
             <template slot-scope="scope">
               <div>{{ scope.row.success === 1 ? "是" : "否" }}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="requestmonitorDuration" label="请求时长"> </el-table-column>
+          <el-table-column prop="requestmonitorDuration" label="请求时长">
+          </el-table-column>
           <el-table-column prop="requestmonitorType" label="请求方式">
           </el-table-column>
         </el-table>
@@ -79,6 +82,7 @@
 <script>
 import request from "@/utils/request.js";
 import requestBox from "./components/request-box.vue";
+import { polling } from  '@/utils/polling'
 export default {
   components: {
     requestBox,
@@ -90,19 +94,19 @@ export default {
           title: "接口请求总量",
           tips: "发起请求的总数量",
           num: 263,
-          key: 'total'
+          key: "total",
         },
         {
           title: "接口请求平均耗时(ms)",
           tips: "接口请求总时长累加/请求总数",
           num: 214.14,
-          key: 'averageTime'
+          key: "averageTime",
         },
         {
           title: "接口请求成功率",
           tips: "请求成功数/请求总数",
           num: "100%",
-          key: 'successRate'
+          key: "successRate",
         },
       ],
       dialogVisible: false,
@@ -127,8 +131,10 @@ export default {
   computed: {
     resposeMessage: function () {
       // `this` 指向 vm 实例
-      return this.row.requestmonitorResponse ? this.row.requestmonitorResponse : 'fetch请求无法获取到返回信息'
-    }
+      return this.row.requestmonitorResponse
+        ? this.row.requestmonitorResponse
+        : "fetch请求无法获取到返回信息";
+    },
   },
   methods: {
     visibleDialog(row) {
@@ -140,58 +146,39 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-    },  
-    calculateTime(arr,num,numType){
-      if(numType === 1){
-        let dutationall = arr.reduce((pre,cur) => pre + cur.requestmonitorDuration,0);
-        return (dutationall/num).toFixed(2);
-      }else if(numType === 0){
-        let successItemLength = arr.filter(item => item.requestmonitorSuccess == 1).length;
-        return ((successItemLength/num)*100).toFixed(2) + '%'
-      }
-      
     },
-    calculateRate(arr,num){
+    calculateTime(arr, num, numType) {
+      if (numType === 1) {
+        let dutationall = arr.reduce(
+          (pre, cur) => pre + cur.requestmonitorDuration,
+          0
+        );
+        return (dutationall / num).toFixed(2);
+      } else if (numType === 0) {
+        let successItemLength = arr.filter(
+          (item) => item.requestmonitorSuccess == 1
+        ).length;
+        return ((successItemLength / num) * 100).toFixed(2) + "%";
+      }
+    },
+    handleProcessData() {
+      request.get("request/httpRequest").then((res) => {
+        let averageTime = this.calculateTime(res.data.today, res.data.total, 1);
+        let rate = this.calculateTime(res.data.today, res.data.total, 0);
+        this.boxList.find((item) => item.key == "total").num =
+          res.data.total || 0;
+        this.boxList.find((item) => item.key == "averageTime").num =
+          averageTime || 0;
+        this.boxList.find((item) => item.key == "successRate").num =
+          rate || "0%";
 
-    }
+        this.tableData = res.data.today;
+      });
+    },
   },
   created() {
-    request.get('request/httpRequest').then((res) =>{
-      let averageTime = this.calculateTime(res.data.today, res.data.total,1)
-      let rate = this.calculateTime(res.data.today, res.data.total,0)
-      this.boxList.find(item => item.key == 'total').num = res.data.total || 0;
-      this.boxList.find(item => item.key == 'averageTime').num = averageTime || 0;
-      this.boxList.find(item => item.key == 'successRate').num = rate || '0%';
-      
-      this.tableData = res.data.today
-    })
-
-    /*     let orignOpen = XMLHttpRequest.prototype.open;
-    function Myopen(method, url, async, username, password) {
-      console.log("捕捉到xmlhttprequest.open");
-      console.log(
-        "request info need report-----",
-        method,
-        url,
-        async,
-        username,
-        password
-      );
-      let startTime = Date.now();
-      orignOpen.call(this, method, url, async, username, password);
-      let that = this;
-      that.addEventListener.call(that, "load", function (event) {
-        let endTime = Date.now();
-        let duration = endTime - startTime;
-        console.log("捕捉到xmlhttprequest.load", duration);
-        console.log(event);
-      });
-    }
-
-    XMLHttpRequest.prototype.open = Myopen; */
-    // axios.get("https://autumnfish.cn/api/joke/").then((response) => {
-    //   console.log(response.data);
-    // });
+    // this.handleProcessData();
+    polling(this.handleProcessData)
   },
 };
 </script>
