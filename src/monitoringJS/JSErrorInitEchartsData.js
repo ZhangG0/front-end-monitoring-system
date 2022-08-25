@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 
 export function initJSErrorEchartsData(Data,option,RingData) {
     const EchartsRequestData = Data[0];
@@ -7,13 +8,15 @@ export function initJSErrorEchartsData(Data,option,RingData) {
     const nowTime = new Date();
     const DataX = [];
     const DataXBefore = [];
-    //之前一周或之前一天
-    const beforeDay = 7;
     //X轴数据数组初始化
-    const tempDate = (nowTime.getMonth()+1)+"-"+(nowTime.getDate()-beforeDay)+" "
+    const tempDate = dayjs().subtract(1, "week").format("MM-DD")+" "
     for (let i = 0; i < 12; i++) {
-        let tempTime = (Math.abs(nowTime.getHours()-11+i)+":00").padStart(5,"0");
-
+        let tempTime;
+        if (nowTime.getHours()+i < 11){
+            tempTime = (24+(nowTime.getHours()-11+i)+":00").padStart(5,"0");
+        }else {
+            tempTime = (nowTime.getHours()-11+i+":00").padStart(5,"0");
+        }
         DataX.push(tempTime);
         DataXBefore.push(tempDate+tempTime)
     }
