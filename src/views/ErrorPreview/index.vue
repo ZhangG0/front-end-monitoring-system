@@ -485,41 +485,54 @@ export default {
 		//监控计算rate值
 		watchJSErrorRate: {
 			handler(newValue) {
-				this.rateData.JSErrorRate = Number(
-					(
-						(arraySum(newValue) / arraySum(this.echartOption.JSErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.JSErrorEchartOption.series[0].data) === 0){
+          this.rateData.JSErrorRate = 100;
+        }else {
+          this.rateData.JSErrorRate = Number(
+              (
+                  (arraySum(newValue) / arraySum(this.echartOption.JSErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
+
 			},
 			immediate: true,
 			deep: true,
 		},
 		watchResourcesErrorRate: {
 			handler(newValue) {
-				this.rateData.ResourceErrorDataRate = Number(
-					(
-						(arraySum(newValue) /
-							arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) === 0){
+          this.rateData.ResourceErrorDataRate = 100;
+        }else {
+          this.rateData.ResourceErrorDataRate = Number(
+              (
+                  (arraySum(newValue) /
+                      arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
 			},
 			immediate: true,
 			deep: true,
 		},
 		watchWhiteScreenErrorRate: {
 			handler(newValue) {
-				this.rateData.whiteScreenErrorRate = Number(
-					(
-						(arraySum(newValue) /
-							arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) === 0){
+          this.rateData.whiteScreenErrorRate = 100;
+        }else {
+          this.rateData.whiteScreenErrorRate = Number(
+              (
+                  (arraySum(newValue) /
+                      arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
 			},
 			immediate: true,
 			deep: true,
@@ -539,7 +552,6 @@ export default {
 				this.EchartsRequestData = newValue
 				initJSErrorEchartsData(this.EchartsRequestData, this.echartOption, this.RingData)
 			},
-			immediate: true,
 		},
 		interfaceEchartData: {
 			handler(newValue) {
@@ -553,14 +565,19 @@ export default {
 		},
 		watchinterfaceErrorRate: {
 			handler(newValue) {
-				this.rateData.interfaceErrorRate = Number(
-					(
-						(arraySum(newValue) /
-							arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) -
-							1) *
-						100
-					).toFixed(2)
-				)
+        if (arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) === 0){
+          this.rateData.interfaceErrorRate = 100;
+        }else {
+          this.rateData.interfaceErrorRate = Number(
+              (
+                  (arraySum(newValue) /
+                      arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) -
+                      1) *
+                  100
+              ).toFixed(2)
+          )
+        }
+
 			},
 			immediate: true,
 			deep: true,
@@ -577,7 +594,7 @@ export default {
 	},
 	mounted() {
 		this.getEchartsData()
-		this.today = dayjs().subtract(1, "week").format("YYYY-MM-DD")
+		this.today = dayjs().format("YYYY-MM-DD")
 	},
 	created() {
 	},
