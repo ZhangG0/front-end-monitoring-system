@@ -63,8 +63,9 @@ export function processData(resData) {
   let weekSeries = new Performance()
 
   // 处理日数据resData[0]
-  let nowHour = new Date().getHours() // 不要写死24，当前是多少小时就只查多少小时
-  for (let hour = 0; hour < nowHour; hour++) {
+  // 当前是多少小时就只查多少小时，如果写死24，会因为查不到未来的数据导致性能平均值NaN
+  let nowHour = new Date().getHours()
+  for (let hour = 0; hour <= nowHour; hour++) {
     let hourArray = getHourArray(resData.today, hour)
     pushData(todaySeries, hourArray)
   }
