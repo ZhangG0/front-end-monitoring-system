@@ -337,6 +337,7 @@ export default {
       },
       // 用于比较上一次轮询过来的数据
       dataFlag: {},
+      // 用于clearInterval()
       timer: null,
     };
   },
@@ -375,12 +376,12 @@ export default {
             "performanceGET轮询",
             JSON.stringify(this.dataFlag) !== JSON.stringify(res.data)
           );
-          console.log(res);
+          // console.log(res);
           if (JSON.stringify(this.dataFlag) !== JSON.stringify(res.data)) {
             this.dataFlag = res.data;
             let data = processData(res.data);
-            console.log(data.todaySeries);
-            console.log(data.weekSeries);
+            console.log("这里是data.todaySeries", data.todaySeries);
+            console.log("这里是data.weekSeries", data.weekSeries);
             this.todaySeries = data.todaySeries;
             this.weekSeries = data.weekSeries;
           }
