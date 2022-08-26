@@ -4,6 +4,8 @@ export default {
             date: [],
             PvOptionData: [],
             UvOptionData: [],
+            PvPercent:0,
+            UvPercent:0,
             dataGroups: [
                 { title: "网页量(UV)", number: 0, percent: 0 },
                 { title: "页面量(PV)", number: 0, percent: 0 },
@@ -134,7 +136,7 @@ export default {
                     ],
                     series: [
                         {
-                            name: 'Direct',
+                            name: `${this.pageStopArr}`,
                             type: 'bar',
                             barWidth: '60%',
                             data:data
@@ -151,14 +153,16 @@ export default {
             let { status, data } = await this.$api.getUvOrPv();
             if (status === 200) {
                 console.log('开始执行');
-                let arr = ['today','one','two','thr','fou','fiv']
-                for (let i in data) {
-                    arr.forEach(item => {
+                let arr = ['today','one','two','thr','fou','fiv','six']
+                arr.forEach(item => {
+                    for(let i in data){
                         if(item === i){
-                            this.PvOptionData.push( (data[i][0] ? data[i][0].userbehaviorPv : 0));
-                            this.UvOptionData.push( (data[i][0] ? data[i][0].userbehaviorUv : 0));
+                            this.PvOptionData.push( (data[i][0] !== null ? data[i][0].userbehaviorPv : 0));
+                            this.UvOptionData.push( (data[i][0] !== null ? data[i][0].userbehaviorUv : 0));
                         }
-                    })
+                    }
+                })
+                for (let i in data) {
                     this.PvData.push({ [i]: data[i][0]?.userbehaviorPv });
                     this.UvData.push({ [i]: data[i][0]?.userbehaviorUv });
                 }
