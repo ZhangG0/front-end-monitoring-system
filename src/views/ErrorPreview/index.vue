@@ -60,7 +60,7 @@
         </div>
 
         <Echarts
-          :width="375"
+          
           :height="300"
           :day="today"
           times="较前一周"
@@ -78,7 +78,7 @@
           <span class="title"> 接口异常监控大屏 </span>
         </div>
         <Echarts
-          :width="375"
+          
           :height="300"
           :day="today"
           times="较前一周"
@@ -96,7 +96,7 @@
           <span class="title"> 白屏异常监控大屏 </span>
         </div>
         <Echarts
-          :width="375"
+          
           :height="300"
           :day="today"
           times="较前一周"
@@ -120,7 +120,7 @@
           </div>
         </div>
         <Echarts
-          :width="375"
+        
           :height="300"
           :day="today"
           times="较前一周"
@@ -487,54 +487,53 @@ export default {
 		//监控计算rate值
 		watchJSErrorRate: {
 			handler(newValue) {
-        if (arraySum(this.echartOption.JSErrorEchartOption.series[0].data) === 0){
-          this.rateData.JSErrorRate = 100;
-        }else {
-          this.rateData.JSErrorRate = Number(
-              (
-                  (arraySum(newValue) / arraySum(this.echartOption.JSErrorEchartOption.series[0].data) -
-                      1) *
-                  100
-              ).toFixed(2)
-          )
-        }
-
+				if (arraySum(this.echartOption.JSErrorEchartOption.series[0].data) === 0){
+				this.rateData.JSErrorRate = 100;
+				}else {
+				this.rateData.JSErrorRate = Number(
+					(
+						(arraySum(newValue) / arraySum(this.echartOption.JSErrorEchartOption.series[0].data) -
+							1) *
+						100
+					).toFixed(2)
+				)
+				}
 			},
 			immediate: true,
 			deep: true,
 		},
 		watchResourcesErrorRate: {
 			handler(newValue) {
-        if (arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) === 0){
-          this.rateData.ResourceErrorDataRate = 100;
-        }else {
-          this.rateData.ResourceErrorDataRate = Number(
-              (
-                  (arraySum(newValue) /
-                      arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) -
-                      1) *
-                  100
-              ).toFixed(2)
-          )
-        }
+				if (arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) === 0){
+				this.rateData.ResourceErrorDataRate = 100;
+				}else {
+				this.rateData.ResourceErrorDataRate = Number(
+					(
+						(arraySum(newValue) /
+							arraySum(this.echartOption.ResourcesErrorEchartOption.series[0].data) -
+							1) *
+						100
+					).toFixed(2)
+				)
+				}
 			},
 			immediate: true,
 			deep: true,
 		},
 		watchWhiteScreenErrorRate: {
 			handler(newValue) {
-        if (arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) === 0){
-          this.rateData.whiteScreenErrorRate = 100;
-        }else {
-          this.rateData.whiteScreenErrorRate = Number(
-              (
-                  (arraySum(newValue) /
-                      arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) -
-                      1) *
-                  100
-              ).toFixed(2)
-          )
-        }
+				if (arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) === 0){
+				this.rateData.whiteScreenErrorRate = 100;
+				}else {
+				this.rateData.whiteScreenErrorRate = Number(
+					(
+						(arraySum(newValue) /
+							arraySum(this.echartOption.WhiteScreenErrorEchartOption.series[0].data) -
+							1) *
+						100
+					).toFixed(2)
+				)
+				}
 			},
 			immediate: true,
 			deep: true,
@@ -567,18 +566,18 @@ export default {
 		},
 		watchinterfaceErrorRate: {
 			handler(newValue) {
-        if (arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) === 0){
-          this.rateData.interfaceErrorRate = 100;
-        }else {
-          this.rateData.interfaceErrorRate = Number(
-              (
-                  (arraySum(newValue) /
-                      arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) -
-                      1) *
-                  100
-              ).toFixed(2)
-          )
-        }
+				if (arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) === 0){
+				this.rateData.interfaceErrorRate = 100;
+				}else {
+				this.rateData.interfaceErrorRate = Number(
+					(
+						(arraySum(newValue) /
+							arraySum(this.echartOption.interfaceErrorEchartOption.series[0].data) -
+							1) *
+						100
+					).toFixed(2)
+				)
+				}
 
 			},
 			immediate: true,
@@ -649,20 +648,37 @@ export default {
 		width: 15%;
 	}
 }
+// .details {
+// 	display: flex;
+// 	flex-flow: row wrap;
+// 	justify-content: space-between;
+// 	margin-top: 20px;
+//   padding: 10px;
+//   background-color: white;
+// 	.el-card {
+// 		min-width: 25%;
+// 		max-width: 33%;
+// 		display: flex;
+// 		flex-flow: row wrap;
+// 		margin-top: 5px;
+// 		justify-content: center;
+// 	}
+// }
 .details {
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: auto auto auto ;
+	grid-template-rows: auto  ;
+	grid-column-gap: 20px;
+	grid-row-gap:20px;
 	margin-top: 20px;
-  padding: 10px;
-  background-color: white;
+	padding: 10px;
+	background-color: white;
 	.el-card {
-		min-width: 25%;
-		max-width: 33%;
-		display: flex;
-		flex-flow: row wrap;
-		margin-top: 5px;
+		width:100%;
+		display: grid;
 		justify-content: center;
+		margin-top: 5px;
+		
 	}
 }
 .miniTitle {
